@@ -6,7 +6,7 @@ This is a Terraform project consisting of two primary sub-projects: `terra-arti`
 
 In order to setup kubectl against the cluster run:
 
-'''gcloud container clusters get-credentials $(terraform output -raw kubernetes_cluster_name) --region $(terraform output -raw region)'''
+```gcloud container clusters get-credentials $(terraform output -raw kubernetes_cluster_name) --region $(terraform output -raw region)```
 
 ## Sub-Project: terra-arti 
 
