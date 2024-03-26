@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sz_mysql
+  template:
+    metadata:
+      labels:
+        app: sz_mysql
+    spec:
+      containers:
+      - name: sz-mysql
+        image: us-central1-docker.pkg.dev/playground-s-11-01b69784/my-repository/sz_mysql_image:v1
+        ports:
+        - containerPort: 3306

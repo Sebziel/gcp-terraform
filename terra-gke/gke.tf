@@ -3,11 +3,18 @@ variable "gke_num_nodes" {
   description = "number of gke nodes"
 }
 
+#I have to retrieve the id of the account and assign it to node pool in order for K8s to be able to pull images. 
+#data "google_service_account" "acg_account" {
+#  account_id = "cli-service-account-1@playground-s-11-01b69784.iam.gserviceaccount.com"
+#}
+#https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/service_account
+
+
 # GKE cluster
 resource "google_container_cluster" "primary" {
   name     = "${var.project_id}-gke"
   location = var.region
-  
+
   # We can't create a cluster with no node pool defined, but we want to only use
   # separately managed node pools. So we create the smallest possible default
   # node pool and immediately delete it.
