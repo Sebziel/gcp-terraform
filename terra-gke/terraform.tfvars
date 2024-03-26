@@ -1,2 +1,2 @@
-project_id = "playground-s-11-4786bbdd"
+project_id = ""
 region     = "us-central1"

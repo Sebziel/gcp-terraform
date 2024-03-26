@@ -2,6 +2,6 @@
 
 # Ignore .terraform.tfstate files and hcl locks
 **/.terraform.tfstate.lock.info
-**/terraform.tfstate
+**/terraform.tfstate**
 **/.terraform.lock.hcl
 **/.terraform*
