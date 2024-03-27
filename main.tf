@@ -11,3 +11,4 @@ module "kubernetesCluster" {
   gke_num_nodes = var.gke_num_nodes
   region = var.region
 }
+#outputs to be done!
