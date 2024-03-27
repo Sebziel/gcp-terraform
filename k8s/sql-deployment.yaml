@@ -14,6 +14,31 @@ spec:
     spec:
       containers:
       - name: sz-mysql
-        image: us-central1-docker.pkg.dev/playground-s-11-89992b8d/my-repository/sz_mysql_image:v1
+        image: us-central1-docker.pkg.dev/playground-s-11-5ae8655e/my-repository/sz_mysql_image:v1
         ports:
         - containerPort: 3306
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: sz-mysql-service
+spec:
+  selector:
+    app: sz_mysql
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pythondb-pod
+spec:
+  containers:
+  - name: pythondb-pod-container
+    image: us-central1-docker.pkg.dev/playground-s-11-5ae8655e/my-repository/pythondb:v2

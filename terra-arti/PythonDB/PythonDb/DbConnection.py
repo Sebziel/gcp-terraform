@@ -25,7 +25,7 @@ class Person(Base):
     def __repr__(self):
         return f"UUID: {self.uuid}, firstname: {self.firstname}, lastname: {self.lastname}, gender: {self.email}, phone no: {self.phone_number}"
 
-engine=create_engine("mysql+pymysql://admin:nimda@localhost/mydatabase") #echo=True
+engine=create_engine("mysql+pymysql://admin:nimda@sz-mysql-service/mydatabase") #echo=True
 Base.metadata.create_all(bind=engine) #creates Person table
 Session = sessionmaker(bind=engine)
 session = Session()

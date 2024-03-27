@@ -3,7 +3,7 @@ FROM ubuntu:latest
 
 COPY . /app
 RUN apt-get update
-RUN apt install python3-pip nano -y
+RUN apt install python3-pip nano  mysql-client iputils-ping -y
 WORKDIR /app
 RUN pip3 install .
 
