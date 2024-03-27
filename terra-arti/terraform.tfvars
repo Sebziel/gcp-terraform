@@ -1,0 +1,1 @@
+image_list = ["pythondb", "sz_mysql"]

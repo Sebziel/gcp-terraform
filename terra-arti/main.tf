@@ -14,12 +14,19 @@ resource "google_artifact_registry_repository" "my-repo" {
   repository_id = "my-repository"
   description   = "example docker repository"
   format        = "DOCKER"
+  depends_on = [ null_resource.activateaApis ]
+}
+
+resource "null_resource" "buildAndPushImages" {
+  for_each = toset("${var.image_list}")
+  depends_on = [ google_artifact_registry_repository.my-repo ]
   provisioner "local-exec" {
-    command = "./build_image.sh"
+    command = "./build_image.sh "
     environment = {
-      LOCATION = "${self.location}"
-      PROJECT  = "${self.project}"
-      REPO_ID  = "${self.repository_id}"
+      LOCATION = "${google_artifact_registry_repository.my-repo.location}"
+      PROJECT  = "${google_artifact_registry_repository.my-repo.project}"
+      REPO_ID  = "${google_artifact_registry_repository.my-repo.repository_id}"
+      IMAGE = "${each.value}"
 
     }
   }
