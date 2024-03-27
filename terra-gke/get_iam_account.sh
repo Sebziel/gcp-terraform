@@ -1,1 +1,0 @@
-gcloud iam service-accounts list --filter="NOT displayName='Compute Engine default service account'" --format="value(EMAIL)"
