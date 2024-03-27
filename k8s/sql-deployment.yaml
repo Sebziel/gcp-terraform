@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: sz-mysql
-        image: us-central1-docker.pkg.dev/playground-s-11-01b69784/my-repository/sz_mysql_image:v1
+        image: us-central1-docker.pkg.dev/playground-s-11-89992b8d/my-repository/sz_mysql_image:v1
         ports:
         - containerPort: 3306
