@@ -17,6 +17,3 @@ echo "Building pythondb utility image"
 docker build ./PythonDB -t $LOCATION-docker.pkg.dev/$PROJECT/$REPO_ID/pythondb:v1
 echo "Pushing pythondb utility image:"
 docker push $LOCATION-docker.pkg.dev/$PROJECT/$REPO_ID/pythondb:v1
-
-
-us-central1-docker.pkg.dev/playground-s-11-5ae8655e/my-repository/pythondb
