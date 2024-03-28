@@ -1,0 +1,27 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pythondb-job
+spec:
+  parallelism: 4
+  completions: 8
+  template:
+    metadata:
+      name: pythondb-pod
+    spec:
+      restartPolicy: Never
+      initContainers:
+        - name: busybox
+          image: busybox:1.28
+          command:
+            - /bin/sh
+            - -c
+            - 'until nc -z sz-mysql-service 3306; do echo waiting for mysql; sleep 5; done;'
+      containers:
+        - name: pythondb-container
+          image: us-central1-docker.pkg.dev/playground-s-11-8aaf1fd2/my-repository/pythondb:v1
+          imagePullPolicy: Always
+          command:
+            - /bin/bash
+            - -c
+            - 'pythondb -u 50000'
