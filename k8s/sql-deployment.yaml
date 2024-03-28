@@ -24,7 +24,31 @@ spec:
         volumeMounts:
         - mountPath: /volume
           name: mysql-storage
-
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: utility-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: utility
+  template:
+    metadata:
+      labels:
+        app: utility
+    spec:
+      volumes:
+      - name: mysql-storage
+        persistentVolumeClaim:
+          claimName: mysql-volumeclaim
+      containers:
+      - name: utility
+        image: us-central1-docker.pkg.dev/playground-s-11-049ae63a/my-repository/utility:v1
+        volumeMounts:
+        - mountPath: /volume
+          name: mysql-storage
 ---
 
 apiVersion: v1
@@ -46,20 +70,17 @@ kind: Pod
 metadata:
   name: pythondb-pod
 spec:
-  volumes:
-  - name: mysql-storage
-    persistentVolumeClaim:
-      claimName: mysql-volumeclaim
+  initContainers:
+    - name: busybox
+      image: busybox:1.28
+      command: 
+      - /bin/sh
+      - -c
+      - 'until nc -z sz-mysql-service 3306; do echo waiting for mysql; sleep 2; done;'
   containers:
   - name: pythondb-pod-container
     image: us-central1-docker.pkg.dev/playground-s-11-049ae63a/my-repository/pythondb:v1
-    command: ['sh', '-c', 'pythondb -u 50']
-    volumeMounts:
-      - mountPath: /volume
-        name: mysql-storage
-
-
-
+    imagePullPolicy: Always
 ---
 
 kind: PersistentVolumeClaim
