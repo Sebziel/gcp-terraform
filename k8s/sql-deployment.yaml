@@ -18,7 +18,7 @@ spec:
           claimName: mysql-volumeclaim
       containers:
       - name: sz-mysql
-        image: us-central1-docker.pkg.dev/playground-s-11-e6d28e30/my-repository/sz_mysql:v1
+        image: us-central1-docker.pkg.dev/playground-s-11-8aaf1fd2/my-repository/sz_mysql:v1
         imagePullPolicy: Always
         ports:
         - containerPort: 3306
@@ -46,7 +46,7 @@ spec:
           claimName: mysql-volumeclaim
       containers:
       - name: utility
-        image: us-central1-docker.pkg.dev/playground-s-11-e6d28e30/my-repository/utility:v1
+        image: us-central1-docker.pkg.dev/playground-s-11-8aaf1fd2/my-repository/utility:v1
         imagePullPolicy: Always
         volumeMounts:
         - mountPath: /volume
@@ -65,29 +65,6 @@ spec:
       port: 3306
       targetPort: 3306
 
----
-
-apiVersion: v1
-kind: Pod
-metadata:
-  name: pythondb-pod
-spec:
-  restartPolicy: Never
-  initContainers:
-    - name: busybox
-      image: busybox:1.28
-      command: 
-      - /bin/sh
-      - -c
-      - 'until nc -z sz-mysql-service 3306; do echo waiting for mysql; sleep 5; done;'
-  containers:
-  - name: pythondb-pod-container
-    image: us-central1-docker.pkg.dev/playground-s-11-e6d28e30/my-repository/pythondb:v1
-    imagePullPolicy: Always
-    command:
-    - /bin/bash
-    - -c
-    - 'pythondb -u 50'
 ---
 
 kind: PersistentVolumeClaim

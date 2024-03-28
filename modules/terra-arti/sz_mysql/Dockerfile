@@ -7,6 +7,7 @@ ENV MYSQL_DATABASE=mydatabase
 ENV MYSQL_USER=admin
 ENV MYSQL_PASSWORD=nimda
 COPY baseusers.sql /docker-entrypoint-initdb.d
+COPY orders.sql /docker-entrypoint-initdb.d
 # EXPOSE port 3306 for other containers to connect
 EXPOSE 3306
 
