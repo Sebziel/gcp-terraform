@@ -72,6 +72,7 @@ kind: Pod
 metadata:
   name: pythondb-pod
 spec:
+  restartPolicy: Never
   initContainers:
     - name: busybox
       image: busybox:1.28
@@ -83,6 +84,10 @@ spec:
   - name: pythondb-pod-container
     image: us-central1-docker.pkg.dev/playground-s-11-e6d28e30/my-repository/pythondb:v1
     imagePullPolicy: Always
+    command:
+    - /bin/bash
+    - -c
+    - 'pythondb -u 50'
 ---
 
 kind: PersistentVolumeClaim
