@@ -3,8 +3,8 @@ kind: Job
 metadata:
   name: pythondb-job
 spec:
-  parallelism: 4
-  completions: 8
+  parallelism: 12
+  completions: 96
   template:
     metadata:
       name: pythondb-pod
@@ -24,4 +24,4 @@ spec:
           command:
             - /bin/bash
             - -c
-            - 'pythondb -u 50000'
+            - 'pythondb -u 25000'
