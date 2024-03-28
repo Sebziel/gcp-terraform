@@ -7,4 +7,4 @@ RUN apt install python3-pip nano  mysql-client iputils-ping -y
 WORKDIR /app
 RUN pip3 install .
 
-CMD ["sleep", "3600"]
+CMD ["pythondb", "-u 50"]

@@ -31,11 +31,3 @@ resource "google_container_node_pool" "primary_nodes" {
     }
   }
 }
-
-resource "google_compute_disk" "gce_disk" {
-  name  = "gce_disk"
-  type  = "pd-standard"
-  zone  = "us-central1-a"
-
-  physical_block_size_bytes = 4096
-}

@@ -12,11 +12,18 @@ spec:
       labels:
         app: sz_mysql
     spec:
+      volumes:
+      - name: mysql-storage
+        persistentVolumeClaim:
+          claimName: mysql-volumeclaim
       containers:
       - name: sz-mysql
-        image: us-central1-docker.pkg.dev/playground-s-11-4034f0be/my-repository/sz_mysql:v1
+        image: us-central1-docker.pkg.dev/playground-s-11-049ae63a/my-repository/sz_mysql:v1
         ports:
         - containerPort: 3306
+        volumeMounts:
+        - mountPath: /volume
+          name: mysql-storage
 
 ---
 
@@ -39,6 +46,29 @@ kind: Pod
 metadata:
   name: pythondb-pod
 spec:
+  volumes:
+  - name: mysql-storage
+    persistentVolumeClaim:
+      claimName: mysql-volumeclaim
   containers:
   - name: pythondb-pod-container
-    image: us-central1-docker.pkg.dev/playground-s-11-4034f0be/my-repository/pythondb:v1
+    image: us-central1-docker.pkg.dev/playground-s-11-049ae63a/my-repository/pythondb:v1
+    command: ['sh', '-c', 'pythondb -u 50']
+    volumeMounts:
+      - mountPath: /volume
+        name: mysql-storage
+
+
+
+---
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: mysql-volumeclaim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
