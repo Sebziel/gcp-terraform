@@ -18,7 +18,8 @@ spec:
           claimName: mysql-volumeclaim
       containers:
       - name: sz-mysql
-        image: us-central1-docker.pkg.dev/playground-s-11-049ae63a/my-repository/sz_mysql:v1
+        image: us-central1-docker.pkg.dev/playground-s-11-e6d28e30/my-repository/sz_mysql:v1
+        imagePullPolicy: Always
         ports:
         - containerPort: 3306
         volumeMounts:
@@ -45,7 +46,8 @@ spec:
           claimName: mysql-volumeclaim
       containers:
       - name: utility
-        image: us-central1-docker.pkg.dev/playground-s-11-049ae63a/my-repository/utility:v1
+        image: us-central1-docker.pkg.dev/playground-s-11-e6d28e30/my-repository/utility:v1
+        imagePullPolicy: Always
         volumeMounts:
         - mountPath: /volume
           name: mysql-storage
@@ -76,10 +78,10 @@ spec:
       command: 
       - /bin/sh
       - -c
-      - 'until nc -z sz-mysql-service 3306; do echo waiting for mysql; sleep 2; done;'
+      - 'until nc -z sz-mysql-service 3306; do echo waiting for mysql; sleep 5; done;'
   containers:
   - name: pythondb-pod-container
-    image: us-central1-docker.pkg.dev/playground-s-11-049ae63a/my-repository/pythondb:v1
+    image: us-central1-docker.pkg.dev/playground-s-11-e6d28e30/my-repository/pythondb:v1
     imagePullPolicy: Always
 ---
 
