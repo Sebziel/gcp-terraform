@@ -27,6 +27,7 @@ resource "null_resource" "buildAndPushImages" {
       PROJECT  = "${google_artifact_registry_repository.my-repo.project}"
       REPO_ID  = "${google_artifact_registry_repository.my-repo.repository_id}"
       IMAGE = "${each.value}"
+      MODULE_PATH = "${path.module}"
 
     }
   }
