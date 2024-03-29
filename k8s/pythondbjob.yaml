@@ -11,8 +11,8 @@ metadata:
   name: pythondb-job
   namespace: data-loader
 spec:
-  parallelism: 5
-  completions: 10
+  parallelism: 12
+  completions: 96
   template:
     metadata:
       name: pythondb-pod

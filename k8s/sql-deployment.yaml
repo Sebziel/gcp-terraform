@@ -135,3 +135,26 @@ spec:
       name: http
   selector:
     app: flaskapp
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: databaseflaskapp-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: databaseflaskapp
+  template:
+    metadata:
+      labels:
+        app: databaseflaskapp
+    spec:
+      containers:
+      - name: databaseflaskapp
+        image: us-central1-docker.pkg.dev/playground-s-11-bbce3e34/my-repository/databaseflask:v1
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
