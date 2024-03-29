@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %} 
+TechDetails
+{% endblock %}
+
+{% block content%}
+
+    <h1>The tech details</h1>
+
+    <ul>
+        {% for tech in techList  %}
+            <li>
+                {{ tech.section }}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <img src="static/flaskLogo.svg">
+
+    <ul>
+        {% for tech in techList  %}
+            <li>
+                <h3>{{tech.section}}: </h3> {{ tech.description }} <br>
+                <h4>Details: </h4>
+                    {% for techDetail in tech.details  %}
+                    <p style="text-indent: 25px">
+                        {{ techDetail }}
+                    </p>
+                    {% endfor %}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <p>
+        <button>
+            <a href="{{ url_for('welcome')}}">
+                Take me home
+            </a>
+        </button>
+    </p>
+    
+{% endblock %}

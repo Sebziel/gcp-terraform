@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %} 
+Cards
+{% endblock %}
+
+{% block content%}
+
+    <h1>The card list</h1>
+
+    <h2>Cards</h2>
+    <ul>
+        {% for card in cards %}
+            <li>
+                <a href="{{ url_for('card_view', index=loop.index0) }}">
+                    {{ card.question }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <p>
+        <button>
+            <a href="{{ url_for('welcome')}}">
+                Take me home
+            </a>
+        </button>
+        <button>
+            <a href="{{ url_for('add_card')}}">
+                Add new card
+            </a>
+        </button>
+    </p>
+
+{% endblock %}

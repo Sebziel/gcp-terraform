@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %} 
+Flower
+{% endblock %}
+
+{% block content%}
+
+    <h1>The flower object</h1>
+    <p> {{ flower["Nazwa"] }} </p>
+
+    {% for key, value in flower.items() %}
+    <li>
+    {{key}} : {{value}}
+    </li>
+    {% endfor %}
+
+    <hr style="width:400px, text-align:left, margin-left:0">
+
+    <img src="/static/{{ flower["Nazwa"] }}.jpg">
+
+    <p>
+        <button>
+            <a href="{{ url_for('welcome')}}">
+                Take me home
+            </a>
+        </button>
+    </p>
+
+{% endblock %}

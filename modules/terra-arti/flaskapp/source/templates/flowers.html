@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %} 
+Flowers
+{% endblock %}
+
+{% block content%}
+
+    <h1>The flower list</h1>
+    <p>Just a list of flowers, simmilar to the one that is used to generate the below object list</p>
+    <p>{{ flowerlist }}</p>
+
+    <img src="static/flowergraphic.png">
+
+    <h2>Flower objects </h2>
+    <ul>
+        {% for flower in allFlowers %}
+            <li>
+                <a href="{{ url_for('flower_view', dindex=flower) }}">
+                    {{ flower}}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <p>
+        <button>
+            <a href="{{ url_for('welcome')}}">
+                Take me home
+            </a>
+        </button>
+    </p>
+    
+{% endblock %}

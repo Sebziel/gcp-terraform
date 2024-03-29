@@ -18,7 +18,7 @@ spec:
           claimName: mysql-volumeclaim
       containers:
       - name: sz-mysql
-        image: us-central1-docker.pkg.dev/playground-s-11-8aaf1fd2/my-repository/sz_mysql:v1
+        image: us-central1-docker.pkg.dev/playground-s-11-3b88a7ff/my-repository/sz_mysql:v1
         imagePullPolicy: Always
         ports:
         - containerPort: 3306
@@ -46,7 +46,7 @@ spec:
           claimName: mysql-volumeclaim
       containers:
       - name: utility
-        image: us-central1-docker.pkg.dev/playground-s-11-8aaf1fd2/my-repository/utility:v1
+        image: us-central1-docker.pkg.dev/playground-s-11-3b88a7ff/my-repository/utility:v1
         imagePullPolicy: Always
         volumeMounts:
         - mountPath: /volume
@@ -77,3 +77,45 @@ spec:
   resources:
     requests:
       storage: 5Gi
+
+---
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: flaskapp-volumeclaim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flaskapp-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flaskapp
+  template:
+    metadata:
+      labels:
+        app: flaskapp
+    spec:
+      volumes:
+      - name: flaskapp-storage
+        persistentVolumeClaim:
+          claimName: flaskapp-volumeclaim
+      containers:
+      - name: flaskapp
+        image: us-central1-docker.pkg.dev/playground-s-11-3b88a7ff/my-repository/flaskapp:v1
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
+        volumeMounts:
+        - mountPath: /volume
+          name: flaskapp-storage

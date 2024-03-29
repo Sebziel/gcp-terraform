@@ -1,0 +1,12 @@
+FROM ubuntu:22.04
+
+RUN apt-get update -y
+RUN apt-get install curl pip -y
+ENV FLASK_APP SimpleApp.py
+ENV FLASK_ENV development
+COPY . /home/project
+RUN pip install -r /home/project/source/requirements.txt
+WORKDIR /home/project/source
+EXPOSE 5000
+
+CMD [ "python3", "/home/project/source/SimpleApp.py" ]

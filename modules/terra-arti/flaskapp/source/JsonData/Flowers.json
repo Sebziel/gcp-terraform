@@ -1,0 +1,52 @@
+[
+    {    
+        "Coffe Arabica" : {
+            "Czestotliwosc podlewania": "3 razy w tygodniu",
+            "location": "biuro",
+            "precise_location": "Parapet",
+            "Opis": "Zielone blyszczace liscie, okolo 15cm wysokosci, w szarej plastikowej doniczce bez podstawki",
+            "id": 1,
+            "Nazwa": "Coffe Arabica" 
+        },
+        "Sparagus" : {
+            "Czestotliwosc podlewania": "2 razy w tygodniu",
+            "location": "biuro",
+            "precise_location": "Parapet",
+            "Opis": "Igielki zamiast lisci, okolo 45 cm wysokosci, w grafitowej ceramicznej doniczce",
+            "id": 2,
+            "Nazwa": "Sparagus" 
+        },
+        "Fitonia - Mosaic Skeleton" : {
+            "Czestotliwosc podlewania": "ile fabryka dala",
+            "location": "biuro",            
+            "precise_location": "Parapet",
+            "Opis": "Niska, jasnozielona z rozowymi plamkami, w czarnej platikowej doniczce z podstawka",
+            "id" : 3,
+            "Nazwa": "Fitonia - Mosaic Skeleton"
+        },
+        "Paproc zwyczajna" : {
+            "Czestotliwosc podlewania": "ile fabryka dala",
+            "location": "Sypialnia",            
+            "precise_location": "Parapet, po lewej stronie",
+            "Opis": "Zwykla zielona paproc w grafitowej doniczce z podstawka",
+            "id" : 4,
+            "Nazwa": "Paproc zwyczajna"
+        },
+        "SkrzydloKwiat" : {
+            "Czestotliwosc podlewania": "ile fabryka dala",
+            "location": "Sypialnia",            
+            "precise_location": "Parapet na srodku",
+            "Opis": "Najwiekszy skrzydlokwiat w mieszkaniu, w duzej, szarej, ceramicznej donicze z podstawka",
+            "id" : 5,
+            "Nazwa": "SkrzydloKwiat"
+        },
+        "Fitonia - Anne White" : {
+            "Czestotliwosc podlewania": "ile fabryka dala",
+            "location": "biuro",            
+            "precise_location": "Parapet",
+            "Opis": "Niska zielona z biaymi zylkami w grafitowej, ceramicznej doniczce z podstawka",
+            "id" : 6,
+            "Nazwa": "Fitonia - Anne White"
+        }
+    }
+]

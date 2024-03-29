@@ -1,0 +1,39 @@
+[
+    {
+        "section": "Technologies used",
+        "description": "The site is generated with Python flask library, html + css, jinja, and Json as a mock database sources.",
+        "details": [
+            "The purpose of the site is to provide a functional website for further training with DevOps" ,
+            "The overall goal is to set up couple of versions of CI/CD pipeline with Jenkins",
+            "Contenerization with Docker is a nice to have",
+            "In order to create more production-like environment, and create a base set up for further training Log gathering and analysis with ELK stack will be created"
+        ]
+    },
+    {
+        "section": "Project structure",
+        "description": "Project contains with /JsonData, /static, /templates, utilities scripts, and the main 'SimpleApp.py' application",
+        "details": [
+            "/JsonData contains the mockDB files in Json format, this was chosen as an alternative to a full DB setup to make things simpler. As a future improvement a simple SQL db might be set up",
+            "/templates contains the HTML files with Jinja variables to make the site more dynamic and adjustable automatically if the data will grow",
+            "/static contains images used in the site and the CSS file, since the front-end and the web development is not the core reason why the application was created the styling is as simple as possible",
+            "utilities scripts - utilities.sh, FlowerUtilities.py, model.py - A bunch of usefull tools to make the application more readable",
+            "SimpleApp.py - Main flask application containing all the views and the logic behind the application"
+        ]
+    },
+    {
+        "section": "Utilities scripts",
+        "description": "Model, FlowersUtilities and utilities.sh - Tools packages used for multiple reasons",
+        "details": [
+            "Model contains a functions to load, save and store the dbmock.json file, responsible for display of the cards. Model also contains the logic of counter functions.",
+            "FlowersUtilities contains a package of functions to read, write and get specific data from Flowers.json. The script contains a couple of not-used functions as a part of learning how to work with Json files, possible to be used in future",
+            "utilities.sh - Simple sh script to help set up the flask environments and create requirements.txt for pip"
+        ]
+    },
+    {
+        "section": "Jenkins",
+        "description": "Jenkins CI CD",
+        "details": [
+            "To Do"
+        ]
+    }
+]

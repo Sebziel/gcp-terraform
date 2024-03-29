@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %} 
+Welcome
+{% endblock %}
+
+{% block content%}
+
+    <h1>Welcome to my site</h1>
+    <p>Created for training purposes of docker, elasticsearch, jenkins and other DevOps tools</p>
+    <p> The site and it's subsites have been visited {{ counter }} times.</p>
+    <p>The counter value is being stored in a Json file, and being updated witch each view function call using below code: </p>
+  
+    <pre>
+    <code>
+    def get_counter_data():
+    with open("JsonData/counter.json", "r") as counterJson:
+        data = json.load(counterJson)
+    return data
+    </code>
+    </pre>
+
+    <pre>
+    <code>
+    def update_counter():
+        value = get_counter_data()
+        value["counter"] += 1
+        with open("JsonData/counter.json", "w") as jsonfile:
+                json.dump(value, jsonfile)
+    </code>
+    </pre>
+
+    <p>The page was served at {{ current_time }}</p>
+
+    <h2>        
+        <a href="{{ url_for('card_list')}}">
+            Take me to card list
+        </a>
+    </h2>
+
+    <h2>        
+            <a href="{{ url_for('flower_list_view')}}">
+                Take me to flower list
+            </a>
+    </h2>
+
+    <h2>        
+        <a href="{{ url_for('techDetails')}}">
+            Take me to tech details
+        </a>
+    </h2>
+
+    <hr style="width:400px, text-align:left, margin-left:0">
+
+    <h2>
+        Bunch of urls
+    </h2>
+    <p>        
+        <a href="{{ url_for('card_view', index=0)}}">
+            Displays the first card object
+        </a>
+    </p>
+
+    <p>        
+        <a href="{{ url_for('api_card_view', index=0)}}">
+            An API for retrieving the card object
+        </a>
+    </p>
+
+    <p>        
+        <a href="{{ url_for('add_card' )}}">
+            Function to add a new card
+        </a>
+    </p>
+
+    <p>        
+        <a href="{{ url_for('FirstPage' )}}">
+            A first page created for testing purposes
+        </a>
+    </p>
+
+    <p>        
+        <a href="{{ url_for('flower_view', dindex='Coffe Arabica' )}}">
+            Displays a flower object
+        </a>
+    </p>
+
+{% endblock %}

@@ -1,0 +1,31 @@
+body {
+    font-family: 'Courier New', Courier, monospace;
+    color:white;
+    background-color: darkgreen;
+}
+a:link{
+    color:lightskyblue;
+}
+a:visited{
+    color: blueviolet;
+}
+img {
+    border-radius: 25px;
+    width: 400px;
+    height: auto;
+}
+button {
+    padding: 14px 40px;
+    font-size: 20px;
+}
+
+pre code{
+    background: black;
+    color: blue;
+    display:inline-block;
+    white-space: pre;
+    font-style:italic;
+    border-radius: 25px;
+    text-align:start;
+    min-width: 25%;
+}

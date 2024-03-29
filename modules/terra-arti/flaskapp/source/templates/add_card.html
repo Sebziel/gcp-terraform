@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %} 
+Add Card
+{% endblock %}
+
+{% block content%}
+
+    <h1>Add a new card</h1>
+    <p>
+        Both fields are required and only have simple front-end validation.
+    </p>
+    <form method="post">
+        <p>
+            Question:
+            <input type="text" name="question" required>
+        </p>
+        <p>
+            Answer:
+            <input type="text" name="answer" required>
+        </p>
+        <button type="submit">Create</button>
+    </form>
+
+{% endblock %}
