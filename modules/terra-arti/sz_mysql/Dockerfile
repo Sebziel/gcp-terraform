@@ -6,8 +6,12 @@ ENV MYSQL_ROOT_PASSWORD=nimda
 ENV MYSQL_DATABASE=mydatabase
 ENV MYSQL_USER=admin
 ENV MYSQL_PASSWORD=nimda
-COPY baseusers.sql /docker-entrypoint-initdb.d
-COPY orders.sql /docker-entrypoint-initdb.d
+# Below might be used as an alternative for generating some data, by default the 2200005UsersBackup.sql is used.
+# COPY baseusers.sql /docker-entrypoint-initdb.d
+# COPY orders.sql /docker-entrypoint-initdb.d
+COPY database.sql.tar.gz /
+RUN tar -xzf database.sql.tar.gz -C /docker-entrypoint-initdb.d
+RUN rm /database.sql.tar.gz
 # EXPOSE port 3306 for other containers to connect
 EXPOSE 3306
 

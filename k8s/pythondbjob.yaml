@@ -11,8 +11,8 @@ metadata:
   name: pythondb-job
   namespace: data-loader
 spec:
-  parallelism: 16
-  completions: 160
+  parallelism: 5
+  completions: 10
   template:
     metadata:
       name: pythondb-pod
@@ -32,4 +32,4 @@ spec:
           command:
             - /bin/bash
             - -c
-            - 'pythondb -u 50000'
+            - 'pythondb -u 25000'
