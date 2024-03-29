@@ -2,6 +2,11 @@
 
 This is a Terraform project consisting of two primary sub-projects: `terra-arti` and `terra-gke`.
 
+## Manual changes required for project:
+
+1.Change the terraform.tfvars project attribute to current gcp project
+2. Change the image to reflect the current gcp project id in /k8s/* deployments
+
 ## Usefull commands:
 
 In order to setup kubectl against the cluster run:
