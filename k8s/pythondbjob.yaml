@@ -1,7 +1,15 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: data-loader
+
+---
+
 apiVersion: batch/v1
 kind: Job
 metadata:
   name: pythondb-job
+  namespace: data-loader
 spec:
   parallelism: 12
   completions: 96
@@ -24,4 +32,4 @@ spec:
           command:
             - /bin/bash
             - -c
-            - 'pythondb -u 25000'
+            - 'pythondb -u 50000'
