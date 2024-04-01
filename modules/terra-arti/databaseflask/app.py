@@ -1,6 +1,5 @@
 from sqlalchemy import create_engine, Column, Integer, String
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, declarative_base
 import os
 
 username = os.getenv('USERNAME')
@@ -23,19 +22,28 @@ class User(Base):
     email = Column(String)
     phone_number = Column(Integer)
 
+    def to_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
 # Create tables in the database if they do not exist
-Base.metadata.create_all(engine)
+#Base.metadata.create_all(engine)
 
 # Create a session maker to interact with the database
-Session = sessionmaker(bind=engine)
-session = Session()
+#Session = sessionmaker(bind=engine)
+#session = Session()
 
 # Query the database to retrieve data
-users = session.query(User).all()
+
+def getUsers(count):
+    Session = sessionmaker(bind=engine)
+    session = Session()
+    userlist = session.query(User).limit(count).all()
+    session.close()
+    return userlist
 
 # Print retrieved data
-for user in users:
-    print(f"User ID: {user.uuid}, Name: {user.firstname}, Lastname: {user.lastname}, Email: {user.email}, Phone number: {user.phone_number}")
+# for user in users:
+#    print(f"User ID: {user.uuid}, Name: {user.firstname}, Lastname: {user.lastname}, Email: {user.email}, Phone number: {user.phone_number}")
 
 # Close the session
-session.close()
+#session.close()
