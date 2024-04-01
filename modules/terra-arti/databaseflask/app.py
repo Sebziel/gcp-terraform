@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Column, Integer, String
+from sqlalchemy import create_engine, Column, Integer, String, or_
 from sqlalchemy.orm import sessionmaker, declarative_base
 import os
 
@@ -25,15 +25,6 @@ class User(Base):
     def to_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
-# Create tables in the database if they do not exist
-#Base.metadata.create_all(engine)
-
-# Create a session maker to interact with the database
-#Session = sessionmaker(bind=engine)
-#session = Session()
-
-# Query the database to retrieve data
-
 def getUsers(count):
     Session = sessionmaker(bind=engine)
     session = Session()
@@ -41,9 +32,9 @@ def getUsers(count):
     session.close()
     return userlist
 
-# Print retrieved data
-# for user in users:
-#    print(f"User ID: {user.uuid}, Name: {user.firstname}, Lastname: {user.lastname}, Email: {user.email}, Phone number: {user.phone_number}")
-
-# Close the session
-#session.close()
+def findUser(queryfirstname, querylastname):
+    Session = sessionmaker(bind=engine)
+    session = Session()
+    user = session.query(User).filter(or_(User.firstname.like(f"%{queryfirstname}%"), User.lastname.like(f"%{querylastname}%")))
+    session.close()
+    return user

@@ -7,4 +7,5 @@ RUN apt install python3-pip nano  mysql-client iputils-ping -y
 WORKDIR /app
 RUN pip3 install .
 
+#Commented out, as in this project k8s is used, and the amount of users is defined in the deployment file.
 #CMD ["pythondb", "-u 50"]
