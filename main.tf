@@ -12,3 +12,9 @@ module "kubernetesCluster" {
   region = var.region
 }
 
+module "influx" {
+  source = "./modules/terra-influx"
+  project_id = var.project_id
+  region = var.region
+}
+
