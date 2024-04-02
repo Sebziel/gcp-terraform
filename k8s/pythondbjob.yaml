@@ -11,8 +11,8 @@ metadata:
   name: pythondb-job
   namespace: data-loader
 spec:
-  parallelism: 5
-  completions: 10
+  parallelism: 12
+  completions: 96
   template:
     metadata:
       name: pythondb-pod
@@ -27,7 +27,7 @@ spec:
 #            - 'until nc -z sz-mysql-service 3306; do echo waiting for mysql; sleep 5; done;'
       containers:
         - name: pythondb-container
-          image: us-central1-docker.pkg.dev/playground-s-11-bbce3e34/my-repository/pythondb:v1
+          image: us-central1-docker.pkg.dev/playground-s-11-c4c89fd0/my-repository/pythondb:v1
           imagePullPolicy: Always
           command:
             - /bin/bash
