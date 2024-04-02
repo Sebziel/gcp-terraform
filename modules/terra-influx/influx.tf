@@ -19,5 +19,5 @@ resource "google_compute_instance" "influx-vm" {
     }
   }
 
-  metadata_startup_script = file("${path.module}/influx-startup.sh")
+  metadata_startup_script = templatefile("${path.module}/influx-startup.sh.tftpl", { ipaddr = "123.123.123.123" , token ="sygoniummonstera"})
 }

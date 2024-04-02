@@ -8,6 +8,30 @@ influx setup \
   --username admin \
   --password nimda2024 \
   --org admins \
-  --token sygoniummonstera \
+  --token ${token} \
   --bucket training-bucket \
   --force
+
+cat << EOF > /home/telegrafconf.txt
+# Configuration for telegraf agent
+# $(PWD)
+# $($(curl -H "Metadata-Flavor: Google" http://metadata.google.internal/computeMetadata/v1/instance/network-interfaces/0/access-configs/0/external-ip))
+[agent]
+  interval = "2s"
+  round_interval = true
+  metric_batch_size = 1000
+  metric_buffer_limit = 10000
+  collection_jitter = "0s"
+  flush_interval = "10s"
+  flush_jitter = "0s"
+  precision = ""
+  hostname = ""
+  omit_hostname = false
+[[outputs.influxdb_v2]]
+  urls = ["http://${ipaddr}:8086"]
+  token = "${token}"
+  organization = "admins"
+  bucket = "training-bucket"
+[[inputs.mem]]
+
+EOF
