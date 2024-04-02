@@ -34,3 +34,9 @@ resource "google_compute_firewall" "influx-firewall" {
   source_ranges = ["0.0.0.0/0"]
 
 }
+
+resource "google_compute_address" "vm-external-address" {
+  name         = "vm-external-address"
+  address_type = "EXTERNAL"
+  region       = "us-central1"
+}

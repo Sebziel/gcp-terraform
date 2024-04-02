@@ -17,3 +17,8 @@ output "kubernetes_cluster_host" {
   value = module.kubernetesCluster.kubernetes_cluster_host
   description = "Cluster Host"
 }
+
+output "influx-external-ip" {
+  value = module.influx.vm-external-ip
+  description = "Cluster Host"
+}
