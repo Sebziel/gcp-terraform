@@ -14,8 +14,6 @@ influx setup \
 
 cat << EOF > /home/telegrafconf.txt
 # Configuration for telegraf agent
-# $(PWD)
-# $($(curl -H "Metadata-Flavor: Google" http://metadata.google.internal/computeMetadata/v1/instance/network-interfaces/0/access-configs/0/external-ip))
 [agent]
   interval = "2s"
   round_interval = true
@@ -33,5 +31,15 @@ cat << EOF > /home/telegrafconf.txt
   organization = "admins"
   bucket = "training-bucket"
 [[inputs.mem]]
+[[inputs.disk]]
+  ignore_fs = ["tmpfs", "devtmpfs", "devfs", "iso9660", "overlay", "aufs", "squashfs"]
+[[inputs.cpu]]
+  percpu = true
+  totalcpu = true
+  collect_cpu_time = false
+  report_active = false
+  core_tags = false  
 
 EOF
+
+telegraf --config /home/telegrafconf.txt
