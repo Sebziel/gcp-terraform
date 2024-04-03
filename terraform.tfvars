@@ -1,4 +1,4 @@
-project_id = "playground-s-11-a82c7afb"
+project_id = "playground-s-11-6167a068"
 region     = "us-central1"
 image_list = ["pythondb", "sz_mysql", "utility", "flaskapp", "databaseflask", "javabuilder"]
 gke_num_nodes = 1
