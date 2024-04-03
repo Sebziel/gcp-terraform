@@ -17,3 +17,7 @@ variable "gke_num_nodes" {
   type = number
   description = "number of gke nodes"
 }
+
+variable "gcloud_token" {
+  description = "gcloud authorization token"
+}

@@ -11,7 +11,12 @@ variable "region" {
   description = "region"
 }
 
+variable "gcloud_token" {
+  description = "gcloud authorization token"
+}
+
 provider "google" {
   project = var.project_id
   region  = var.region
 }
+

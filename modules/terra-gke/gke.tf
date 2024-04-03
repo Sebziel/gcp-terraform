@@ -6,9 +6,10 @@ resource "google_container_cluster" "primary" {
   initial_node_count       = 1
   network    = google_compute_network.vpc.name
   subnetwork = google_compute_subnetwork.subnet.name
-  workload_identity_config {
-    workload_pool = "${var.project_id}.svc.id.goog"
-  }
+  #Workload identity is not aplicable for this project as ACG playground is used, which is blocking IAM access to bind the policy.
+  #workload_identity_config {
+  #  workload_pool = "${var.project_id}.svc.id.goog"
+  #}
 }
 
 # Separately Managed Node Pool
