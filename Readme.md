@@ -1,4 +1,18 @@
-# Project Title
+#Todos
+
+1. Add template to k8s yamls
+2. Add the image to build petclinic app
+    2.1 Add a possibility to create a pods with access to GCP storage
+    2.2 Create a GCP storage with terraform
+    2.3 Push the created JAR file to storage
+3. Add a separate VM with petclinic app
+    3.1 Get the JAR from storage and serve it from tomcat
+4. Configure telegraf to handle the petclinic and feed to influxdb VM
+5. Add a possibility to create a pods with acces
+
+#Done
+
+# GCP + Terraform training
 
 This is a Terraform project consisting of two primary sub-projects: `terra-arti` and `terra-gke`.
 
