@@ -36,7 +36,8 @@ resource "google_container_node_pool" "primary_nodes" {
   }
 }
 
-resource "local_file" "k8s-manifests" {
-  content = templatefile("${path.module}/templates/sql-deployment.yaml.tftpl", { project_id = "${var.project_id}" })
-  filename = "${path.module}/k8s-manifests/sql-deployment.yaml"
+resource "local_file" "createK8sManifests" {
+  for_each = toset("${var.manifest_list}")
+  content = templatefile("${path.module}/templates/${each.value}.yaml.tftpl", { project_id = "${var.project_id}", token = "${var.gcloud_token}" })
+  filename = "${path.module}/k8s-manifests/${each.value}.yaml"
 }

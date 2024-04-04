@@ -8,6 +8,11 @@ variable "image_list" {
   description = "list of images to create, have to match folder names in terra-arti module"
 }
 
+variable "manifest_list" {
+  type = list(string)
+  description = "list of k8s manifests to create"
+}
+
 variable "region" {
   type = string
   description = "GCP region"

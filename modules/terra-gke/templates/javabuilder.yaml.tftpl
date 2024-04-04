@@ -1,14 +1,14 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: test-pod
+  name: javabuilder
 spec:
   containers:
-  - name: test-pod
-    image: us-central1-docker.pkg.dev/playground-s-11-a82c7afb/my-repository/javabuilder:v1
+  - name: javabuilder
+    image: us-central1-docker.pkg.dev/${project_id}/my-repository/javabuilder:v1
     env:
       - name: auth_token
-        value: myvalue
+        value: ${token}
     command: ["/bin/sh", "-c"]
     args: ["./mvnw package; echo 'Second Command'; sleep 3600"]
     #command: ["./mvnw","package"]

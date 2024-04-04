@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-pod
+spec:
+  containers:
+  - name: test-pod
+    image: us-central1-docker.pkg.dev/playground-s-11-127fda1d/my-repository/javabuilder:v1
+    env:
+      - name: auth_token
+        value: ya29.a0Ad52N3_QGTvgKO_-lsRyoL0XkQMEtnzDpwKYEFLIsJ_JeMSQOFE0ZK3H6ZBccoH0iPHvNEoaYRtrPOwawUbwXAIX7FhriL6DxT_7FXjHsSbjejw7uTNTD4RVwO6AnLWeZNjPQbFnSChhHu_o1j-QeAraWdXZkKePPW1GXcyX1476iliWzImbFRREBjPoj1g8sznZdCe3649hdJT6uLRbiDPQWlV6mXttWDVaGF1FOkW4GIa7slppdtnKAQVY_adl-HuzP3cVsx4ZQXGOrO4ti6erc0e8ELQH0lqTStG5Git6V9Dp43Hqfqaz1itbWL1Otq59wpKGwTr-HqVD6jjkv1LR8Yu90ptCB6xn3k2NLMDGXqMfb58hUWSLVbgE7oTnKVsYEeZFBRz9Cwkf1K3wii11z4QzEQaCgYKAWkSARISFQHGX2MiBFo6X3DPhIgTyWoSH4KPSQ0421
+    command: ["/bin/sh", "-c"]
+    args: ["./mvnw package; echo 'Second Command'; sleep 3600"]
+    #command: ["./mvnw","package"]
