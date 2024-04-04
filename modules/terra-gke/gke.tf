@@ -38,6 +38,6 @@ resource "google_container_node_pool" "primary_nodes" {
 
 resource "local_file" "createK8sManifests" {
   for_each = toset("${var.manifest_list}")
-  content = templatefile("${path.module}/templates/${each.value}.yaml.tftpl", { project_id = "${var.project_id}", token = "${var.gcloud_token}" })
+  content = templatefile("${path.module}/templates/${each.value}.yaml.tftpl", { project_id = "${var.project_id}", token = "${var.gcloud_token}", storage_bucket = "${var.project_id}-sz-storage"})
   filename = "${path.module}/k8s-manifests/${each.value}.yaml"
 }

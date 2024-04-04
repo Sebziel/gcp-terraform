@@ -1,14 +1,14 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: test-pod
+  name: javabuilder
 spec:
   containers:
-  - name: test-pod
-    image: us-central1-docker.pkg.dev/playground-s-11-127fda1d/my-repository/javabuilder:v1
+  - name: javabuilder
+    image: us-central1-docker.pkg.dev/playground-s-11-987aae32/my-repository/javabuilder:v1
     env:
       - name: auth_token
-        value: ya29.a0Ad52N3_QGTvgKO_-lsRyoL0XkQMEtnzDpwKYEFLIsJ_JeMSQOFE0ZK3H6ZBccoH0iPHvNEoaYRtrPOwawUbwXAIX7FhriL6DxT_7FXjHsSbjejw7uTNTD4RVwO6AnLWeZNjPQbFnSChhHu_o1j-QeAraWdXZkKePPW1GXcyX1476iliWzImbFRREBjPoj1g8sznZdCe3649hdJT6uLRbiDPQWlV6mXttWDVaGF1FOkW4GIa7slppdtnKAQVY_adl-HuzP3cVsx4ZQXGOrO4ti6erc0e8ELQH0lqTStG5Git6V9Dp43Hqfqaz1itbWL1Otq59wpKGwTr-HqVD6jjkv1LR8Yu90ptCB6xn3k2NLMDGXqMfb58hUWSLVbgE7oTnKVsYEeZFBRz9Cwkf1K3wii11z4QzEQaCgYKAWkSARISFQHGX2MiBFo6X3DPhIgTyWoSH4KPSQ0421
+        value: ya29.a0Ad52N3_Ot9MyBkFWomC8uHub8Bqnb6HpUmsioHU93uR6ic8ke_7w39ETHdT4rH10wHG10pX9c7kRivWFn6WRsOG92k3rvyjkd5X4rUJ5pxQS71kujKWkh7UyLLAy3biYXKo-laN-STYAuG-EyRFZItaa7kicfkOF2jbTnZvBlN4yoH76hacmB3VmXmPBnMboBBauFKOHlNanuNoPNbanflm0w9zHyPRINJWxsYSLvrlFNOj-bHQRPGcRROimFWIUa6Rq6wCx4U3ivFWPW94E8UCeCdlx5hIrWrLu7TPJVoLvMR_1BI9IqT__8iHzMttrJUb6j5abx1MnyiFZtwqc0e0uZhhMXPF8rp3qE20vDp0RqoXZyFIcwXxp9nX3q_E5M6ec3vtoueBs8L16NNzk_lTJ3jKzEPYaCgYKAX0SARISFQHGX2MiQvGG4oDyUQUcKHQ_hKIp9g0422
     command: ["/bin/sh", "-c"]
-    args: ["./mvnw package; echo 'Second Command'; sleep 3600"]
+    args: ["./mvnw package; echo 'Second Command'; curl -X POST --data-binary @target/spring-petclinic-3.2.0-SNAPSHOT.jar -H \"Authorization: Bearer $auth_token\" -H \"Content-Type: application/octet-stream\" https://storage.googleapis.com/upload/storage/v1/b/playground-s-11-987aae32-sz-storage/o?name=petclinicapp.jar ; sleep 3600"]
     #command: ["./mvnw","package"]
