@@ -22,3 +22,11 @@ resource "google_compute_instance" "influx-vm" {
   metadata_startup_script = templatefile("${path.module}/influx-startup.sh.tftpl", { ipaddr = google_compute_address.vm-external-address.address , token ="sygoniummonstera"})
 }
 
+
+resource "google_storage_bucket" "static" {
+ name          = "${var.project_id}-sz-storage"
+ location      = "US"
+ storage_class = "STANDARD"
+ uniform_bucket_level_access = true
+}
+

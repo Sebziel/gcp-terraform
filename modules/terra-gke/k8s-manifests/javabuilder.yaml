@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: javabuilder
+spec:
+  containers:
+  - name: javabuilder
+    image: us-central1-docker.pkg.dev/playground-s-11-1a6a1a35/my-repository/javabuilder:v1
+    env:
+      - name: auth_token
+        value: ya29.a0Ad52N3-kKlMS9GBX7pwikks2YTEiEmonG-A_xepyWHBfg9PPVhHhhPE3Q3RNp8p-OhbjEwupAul_LnB0wEQWDbsVN_RbuRQAeD3tPkfbimyh7eZ23CobopcpOQJSPX78YDBh65cdcWQv1aSTUoM9j6fApsQY06CKes_kQjWJ9A_jMSXKn9XVkl71lCLqThdiIFa7taP7UwabZ8BEDL8yst5esb8vtItjmH0OAGnKWKyU5CSrUrCOLQHkobMC_PuvKcZDEfHpw4wH1w5Ykv0EnSCMTZx_U9YBVz8lB8Kyc65l5tYArNDudQBYrkDNOn4vYVq10q0k_9MjZU_WwKV7aftBIvgXKid124WkNIIWjAaVjI97wxfw7ZpHzrdvdxSbMfH_nifna64uo1QLOfdM4rgpeWsPH2SFaCgYKAYYSARESFQHGX2MiPjfxXmRD2YYD2QijGqqKPA0423
+    command: ["/bin/sh", "-c"]
+    args: ["./mvnw package; echo 'Second Command'; curl -X POST --data-binary @target/spring-petclinic-3.2.0-SNAPSHOT.jar -H 'Authorization: Bearer $auth_token' -H 'Content-Type: application/octet-stream' https://storage.googleapis.com/upload/storage/v1/b/playground-s-11-1a6a1a35-sz-storage/o?name=petclinicapp.jar ; sleep 3600"]
+    #command: ["./mvnw","package"]

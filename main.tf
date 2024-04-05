@@ -10,6 +10,8 @@ module "kubernetesCluster" {
   project_id = var.project_id
   gke_num_nodes = var.gke_num_nodes
   region = var.region
+  gcloud_token = var.gcloud_token
+  manifest_list = var.manifest_list
 }
 
 module "influx" {

@@ -11,7 +11,16 @@ variable "region" {
   description = "region"
 }
 
+variable "gcloud_token" {
+  description = "gcloud authorization token"
+}
+
+variable "manifest_list" {
+  type = list(string)
+}
+
 provider "google" {
   project = var.project_id
   region  = var.region
 }
+
