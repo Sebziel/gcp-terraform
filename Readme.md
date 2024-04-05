@@ -8,16 +8,10 @@ In order to setup kubectl against the cluster run:
 
 #Todos
 
-1. Add template to k8s yamls
-2. Add the image to build petclinic app
-    2.1 Add a possibility to create a pods with access to GCP storage
-    2.2 Create a GCP storage with terraform
-    2.3 Push the created JAR file to storage
-    2.4 add note that because of ACG IAM limiatation, the recoomended approach of using GKE workload identity federation is not possible.
+
 3. Add a separate VM with petclinic app
     3.1 Get the JAR from storage and serve it from tomcat
 4. Configure telegraf to handle the petclinic and feed to influxdb VM
-5. Add a possibility to create a pods with acces
 6. Add a way to automatically create a backup of the sz-mysql databse
 
 #Done
@@ -32,14 +26,24 @@ Terra-Arti:
 5. Create an dockerized python app that will serve as an API to retrieve the data from the database.
 6. Create a frontend application with python flask, add it as a docker image. 
 7. Add a utility image for testing purposes.
+8. Add the image to build petclinic app
+    8.1 Add a possibility to create a pods with access to GCP storage - Because of "A cloud Guru's" limatation on access to IAM recoomended approach of using GKE workload identity federation was not possible. Hence, since the environemnt is temporary by default (4h) The authorization token is passed from the cloud shell that triggers the terraform build.
+    8.2 Push the created JAR file to storage
+
 Terra-gke:
 1. Create a GKE cluster with a user-defined number of nodes
  1.2 Add some outputs to partially automate getting the credentials
 2. Add a way to pull the images created in terra-arti module
 3. Create k8s manifests to create deployment of mysql database, add a service so the app will be accesible from within cluster only
 4. Create k8s manifests to deploy the frontend app, add a load-balancer service so the app will be accesible for public.
-5. Add a way to distribute a significant load from the data generator evenly across the nodes in a efficient mannor as a kubernetes job object.
+5. Automate the k8s manifests modifications to ajudst the project-id changes with terraform templates.
+6. Add a way to distribute a significant load from the data generator evenly across the nodes in a efficient mannor as a kubernetes job object.
+
 Terra-influx:
+1. Create a VM that will serve as a influx database
+2. Add configuration for the influx DB to monitor itself with telegraf
+3. Adjsut the configuration to automatically add new values of IP address or others based on a terraform infrastructure. (Using terraform templatefile function, with google startupscript and static external IP assigned to a VM)
+4. Create a GCP storage bucket as a base for storing jar's for tomcat server.
 
 # GCP + Terraform training
 
