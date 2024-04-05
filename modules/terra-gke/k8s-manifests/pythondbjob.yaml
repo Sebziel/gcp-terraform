@@ -20,7 +20,7 @@ spec:
       restartPolicy: Never
       containers:
         - name: pythondb-container
-          image: us-central1-docker.pkg.dev/playground-s-11-1a6a1a35/my-repository/pythondb:v1
+          image: us-central1-docker.pkg.dev/playground-s-11-57291d32/my-repository/pythondb:v1
           imagePullPolicy: Always
           command:
             - /bin/bash

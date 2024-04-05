@@ -8,6 +8,9 @@ Setup local variable for gcloud token:
 initialize terraform from gcp-terraform main catalog:
 ```terraform init```
 
+apply infrastructure:
+```terraform apply```
+
 In order to setup kubectl against the cluster run:
 ```gcloud container clusters get-credentials $(terraform output -raw kubernetes_cluster_name) --region $(terraform output -raw region)```
 
