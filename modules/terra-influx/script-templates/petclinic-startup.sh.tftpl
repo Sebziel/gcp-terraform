@@ -3,3 +3,45 @@ echo '393e8779c89ac8d958f81f942f9ad7fb82a25e133faddaf92e15b16e6ac9ce4c influxdat
 echo 'deb [signed-by=/etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg] https://repos.influxdata.com/debian stable main' | sudo tee /etc/apt/sources.list.d/influxdata.list
 sudo apt-get update && sudo apt-get install telegraf openjdk-17-jdk tomcat9 tomcat9-admin -y
 gsutil cp gs://${project_id}-sz-storage/petclinicapp.war /var/lib/tomcat9/webapps
+
+cat << EOF > /etc/tomcat9/tomcat-users.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<tomcat-users xmlns="http://tomcat.apache.org/xml"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://tomcat.apache.org/xml tomcat-users.xsd"
+              version="1.0">
+ <role rolename="manager-gui"/>
+ <role rolename="manager-script"/>
+ <role rolename="manager-jmx"/>
+ <role rolename="manager-status"/>
+ <role rolename="admin-gui"/>
+ <role rolename="admin-script"/>
+ <user username="admin" password="nimda" roles="manager-gui,manager-script,manager-jmx,manager-status,admin-gui,admin-script"/>
+</tomcat-users>
+
+EOF
+
+
+cat << EOF > /etc/tomcat9/Catalina/localhost/host-manager.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/host-manager" 
+    docBase="/usr/share/tomcat9-admin/host-manager"
+    antiResourceLocking="false" privileged="true">
+   
+    <Valve className="org.apache.catalina.valves.RemoteAddrValve"
+       allow="^.*$" />         
+</Context>
+
+EOF
+
+cat << EOF > /etc/tomcat9/Catalina/localhost/manager.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/manager" 
+    docBase="/usr/share/tomcat9-admin/manager"
+    antiResourceLocking="false" privileged="true">
+   
+    <Valve className="org.apache.catalina.valves.RemoteAddrValve"
+       allow="^.*$" />         
+</Context>
+
+EOF
