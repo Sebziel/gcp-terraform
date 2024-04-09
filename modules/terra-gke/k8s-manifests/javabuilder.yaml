@@ -5,11 +5,11 @@ metadata:
 spec:
   containers:
   - name: javabuilder
-    image: us-central1-docker.pkg.dev/playground-s-11-1c3b26a1/my-repository/javabuilder:v1
+    image: us-central1-docker.pkg.dev/playground-s-11-152ef87f/my-repository/javabuilder:v1
     imagePullPolicy: Always
     env:
       - name: auth_token
-        value: ya29.a0Ad52N39lDHBxXNnv0jQJTBGebZFycyBuk3zW8h2iUTVoV8VLZ0gopctfE4q2-YgHn7E4xsyhTkLPItpmTwllVG5JMRvW3lQtQNyNRDKz5pffKFwumAQB0949CEpEbGRfq7ugr-SauYssDiw20FTMtSAM06li9PsvxhZb5dGVLWcQ-uBhpdR03JlUyQnlsU-rxfP-s1MNUN6nfGodUdjsswU7201_OCf7RF58GyVc5VNa5k4xVbfcmPEK9QUHmhLqMhm-oeQOvy_rlfQnlwxgEqWzrinSBJe-9wvbSawAbC3VX3SUgGhSFhYHvPkLAZiQ7nnvR1CYZGjAG_gwNUM6lf1WNOSGUOWIWAFsGJXbmjP4KRYpJiqkTuYvP5MQ0iCX7x1d1LMook0X5DhCJhOxdxXMY7qu1QaCgYKAVkSARASFQHGX2MiFyCCXU6_sEYPrEQ9rFXmGQ0421
+        value: null
     command: ["/bin/sh", "-c"]
-    args: ["./mvnw package; echo 'Second Command'; curl -X POST --data-binary @target/spring-petclinic-3.2.0-SNAPSHOT.jar -H \"Authorization: Bearer $auth_token\" -H \"Content-Type: application/octet-stream\" https://storage.googleapis.com/upload/storage/v1/b/playground-s-11-1c3b26a1-sz-storage/o?name=petclinicapp.jar ; sleep 3600"]
+    args: ["./mvnw package; echo 'Second Command'; curl -X POST --data-binary @target/spring-petclinic-3.2.0-SNAPSHOT.jar -H \"Authorization: Bearer $auth_token\" -H \"Content-Type: application/octet-stream\" https://storage.googleapis.com/upload/storage/v1/b/playground-s-11-152ef87f-sz-storage/o?name=petclinicapp.jar ; sleep 3600"]
     #command: ["./mvnw","package"]

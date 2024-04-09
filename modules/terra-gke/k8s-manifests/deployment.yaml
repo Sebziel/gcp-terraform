@@ -18,7 +18,7 @@ spec:
           claimName: mysql-volumeclaim
       containers:
       - name: sz-mysql
-        image: us-central1-docker.pkg.dev/playground-s-11-1c3b26a1/my-repository/sz_mysql:v1
+        image: us-central1-docker.pkg.dev/playground-s-11-152ef87f/my-repository/sz_mysql:v1
         imagePullPolicy: Always
         ports:
         - containerPort: 3306
@@ -44,7 +44,7 @@ spec:
     spec:
       containers:
       - name: databaseflaskapp
-        image: us-central1-docker.pkg.dev/playground-s-11-1c3b26a1/my-repository/databaseflask:v1
+        image: us-central1-docker.pkg.dev/playground-s-11-152ef87f/my-repository/databaseflask:v1
         imagePullPolicy: Always
         ports:
         - containerPort: 5000
@@ -71,7 +71,7 @@ spec:
           claimName: flaskapp-volumeclaim
       containers:
       - name: flaskapp
-        image: us-central1-docker.pkg.dev/playground-s-11-1c3b26a1/my-repository/flaskapp:v1
+        image: us-central1-docker.pkg.dev/playground-s-11-152ef87f/my-repository/flaskapp:v1
         imagePullPolicy: Always
         ports:
         - containerPort: 5000
@@ -101,7 +101,7 @@ spec:
           claimName: mysql-volumeclaim
       containers:
       - name: utility
-        image: us-central1-docker.pkg.dev/playground-s-11-1c3b26a1/my-repository/utility:v1
+        image: us-central1-docker.pkg.dev/playground-s-11-152ef87f/my-repository/utility:v1
         imagePullPolicy: Always
         volumeMounts:
         - mountPath: /volume

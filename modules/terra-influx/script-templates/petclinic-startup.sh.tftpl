@@ -11,10 +11,10 @@ do
   if gsutil -q stat gs://${project_id}-sz-storage/petclinicapp.jar; then
     echo "File found. Copying jar commands."
     gsutil cp gs://${project_id}-sz-storage/petclinicapp.jar /home
-    java -jar petclinicapp.jar > /dev/null 2>&1 &
+    java -jar /home/petclinicapp.jar > /dev/null 2>&1 &
     break
   else
-    echo "File not found. Retrying after 5 seconds."
-    sleep 5
+    echo "File not found. Retrying after 20 seconds."
+    sleep 20
   fi
 done
