@@ -23,6 +23,7 @@ Apply k8s-manifests
 4. Configure telegraf to handle the petclinic and feed to influxdb VM
 5. Add a way to automatically create a backup of the sz-mysql databse
     5.1 Sent the backups to storage
+6. Set up JVM parameters monitoring thoguh telegraf and jolookia 
 
 #Done
 

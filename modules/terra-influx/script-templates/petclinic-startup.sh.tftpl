@@ -30,12 +30,28 @@ cat << EOF > /home/telegrafconf.txt
   totalcpu = true
   collect_cpu_time = false
   report_active = false
-  core_tags = false  
-
+  core_tags = false
+[[inputs.jolokia2_agent]]
+  urls = ["http://localhost:8778/jolokia"]
+[[inputs.jolokia2_agent.metric]]
+  name  = "java_runtime"
+  mbean = "java.lang:type=Runtime"
+  paths = ["Uptime"]
+[[inputs.jolokia2_agent.metric]]
+  name     = "jvm_garbage_collector"
+  mbean    = "java.lang:name=*,type=GarbageCollector"
+  paths    = ["CollectionTime", "CollectionCount"]
+  tag_keys = ["name"]
+[[inputs.jolokia2_agent.metric]]
+  name       = "jvm_memory_pool"
+  mbean      = "java.lang:name=*,type=MemoryPool"
+  paths      = ["Usage", "PeakUsage", "CollectionUsage"]
+  tag_keys   = ["name"]
+  tag_prefix = "pool_"
 EOF
 
 telegraf --config /home/telegrafconf.txt > /dev/null 2>&1 &
-
+wget -O /home/jolokia-agent.jar https://search.maven.org/remotecontent?filepath=org/jolokia/jolokia-agent-jvm/2.0.2/jolokia-agent-jvm-2.0.2-javaagent.jar 
 
 while true
 do
@@ -43,7 +59,7 @@ do
   if gsutil -q stat gs://${project_id}-sz-storage/petclinicapp.jar; then
     echo "File found. Copying jar commands."
     gsutil cp gs://${project_id}-sz-storage/petclinicapp.jar /home
-    java -jar /home/petclinicapp.jar > /dev/null 2>&1 &
+    java -javaagent:/home/jolokia-agent.jar -jar /home/petclinicapp.jar > /dev/null 2>&1 &
     break
   else
     echo "File not found. Retrying after 20 seconds."

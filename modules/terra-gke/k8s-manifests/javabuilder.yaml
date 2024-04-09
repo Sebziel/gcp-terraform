@@ -13,6 +13,6 @@ spec:
         imagePullPolicy: Always
         env:
           - name: auth_token
-            value: ya29.a0Ad52N3-Bt9k-QKqtT-A7DYoxv0fY1Nwhl3_lPgTu9iltrr5-HKcXW5jhLdnXzqxzkjsQ4T3WNzMmY6FOxF5japxcjVC2X9HYZhYDGPi9maUQLpisl6U-hfOvi8UkZwtPt6j5TDUryQqwdt3GSshJSBJrrITaU0KxibCVU53nQVzrCmBkDPcDsP7vNhIa9VtdGIzxtctQQnUL5OelFbytvaIf9cs8TCCn0beuUqFePHaZVmXdJGY0GyOg1HI6afzfV59mhZKxOaq7PXwqZS4-B7vDk_X0WrSRgkYxumMAVis6UudnQLehs7eFJFaePS7gixwSlUo60Xa8Dc91BYCtd6QjlXiHcv3mqDFiCePObOxDse1V8sjgbYoBc4q7Lchoobh3bp2whjw8CcsTHXB2vMx1YQMZp9AaCgYKAaoSARASFQHGX2MiMdj3-VbWVINE0VXrg_AK4A0422
+            value: null
         command: ["/bin/sh", "-c"]
         args: ["./mvnw package; echo 'Second Command'; curl -X POST --data-binary @target/spring-petclinic-3.2.0-SNAPSHOT.jar -H \"Authorization: Bearer $auth_token\" -H \"Content-Type: application/octet-stream\" https://storage.googleapis.com/upload/storage/v1/b/playground-s-11-aca7ddd6-sz-storage/o?name=petclinicapp.jar"]
