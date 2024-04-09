@@ -4,6 +4,38 @@ echo 'deb [signed-by=/etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg] https
 sudo apt-get update && sudo apt-get install telegraf openjdk-17-jdk maven -y
 
 
+cat << EOF > /home/telegrafconf.txt
+# Configuration for telegraf agent
+[agent]
+  interval = "2s"
+  round_interval = true
+  metric_batch_size = 1000
+  metric_buffer_limit = 10000
+  collection_jitter = "0s"
+  flush_interval = "10s"
+  flush_jitter = "0s"
+  precision = ""
+  hostname = ""
+  omit_hostname = false
+[[outputs.influxdb_v2]]
+  urls = ["http://${ipaddr}:8086"]
+  token = "${token}"
+  organization = "admins"
+  bucket = "training-bucket"
+[[inputs.mem]]
+[[inputs.disk]]
+  ignore_fs = ["tmpfs", "devtmpfs", "devfs", "iso9660", "overlay", "aufs", "squashfs"]
+[[inputs.cpu]]
+  percpu = true
+  totalcpu = true
+  collect_cpu_time = false
+  report_active = false
+  core_tags = false  
+
+EOF
+
+telegraf --config /home/telegrafconf.txt > /dev/null 2>&1 &
+
 
 while true
 do
