@@ -1,14 +1,18 @@
-apiVersion: v1
-kind: Pod
+apiVersion: batch/v1
+kind: Job
 metadata:
   name: javabuilder
 spec:
-  containers:
-  - name: javabuilder
-    image: us-central1-docker.pkg.dev/playground-s-11-aca7ddd6/my-repository/javabuilder:v1
-    imagePullPolicy: Always
-    env:
-      - name: auth_token
-        value: ya29.a0Ad52N39vg_TmQ4-xag58reYWXjuo-SEOP14uPuCiZ-VB8ZsE5lGFNtIyutLJu1YFmpYvx8N2Yz5NOHcjQsCAJePM5k7nMN3o8Wf2nivlNKgd6B_3agvaLyrUeopWq0bNJhMtYp45ZU0sJadAcB9wtyzzZMYp6imeOx1pXW9k_d7gFMp6IQkP1mtrwgcZszG73leknmqOlfIiZGr8PXeLNHxyMZdX-ZcBTPZTOziqFi7mIDtSZ_zKAH_MMaNNo0jTtmkuFtJk1Zcdnl2-yJHTVMazNWDAapU3ObgASGke5lY6Sf-ymK0VQv5VSXFQQb64U1A9E1EZSVNwCMQfcz9kUiul3tRbNm-j-NuMQM7dDQeW7n__BynQSM2grxwY57QFD0KuAS0rmJ16_Lh-wY2jfGjUE--u07QaCgYKAWQSARASFQHGX2MiuxbBs7SUFXIe4CBjZ_IRUQ0422
-    command: ["/bin/sh", "-c"]
-    args: ["./mvnw package; echo 'Second Command'; curl -X POST --data-binary @target/spring-petclinic-3.2.0-SNAPSHOT.jar -H \"Authorization: Bearer $auth_token\" -H \"Content-Type: application/octet-stream\" https://storage.googleapis.com/upload/storage/v1/b/playground-s-11-aca7ddd6-sz-storage/o?name=petclinicapp.jar ; sleep 3600"]
+  backoffLimit: 4
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: javabuilder
+        image: us-central1-docker.pkg.dev/playground-s-11-aca7ddd6/my-repository/javabuilder:v1
+        imagePullPolicy: Always
+        env:
+          - name: auth_token
+            value: ya29.a0Ad52N3-Bt9k-QKqtT-A7DYoxv0fY1Nwhl3_lPgTu9iltrr5-HKcXW5jhLdnXzqxzkjsQ4T3WNzMmY6FOxF5japxcjVC2X9HYZhYDGPi9maUQLpisl6U-hfOvi8UkZwtPt6j5TDUryQqwdt3GSshJSBJrrITaU0KxibCVU53nQVzrCmBkDPcDsP7vNhIa9VtdGIzxtctQQnUL5OelFbytvaIf9cs8TCCn0beuUqFePHaZVmXdJGY0GyOg1HI6afzfV59mhZKxOaq7PXwqZS4-B7vDk_X0WrSRgkYxumMAVis6UudnQLehs7eFJFaePS7gixwSlUo60Xa8Dc91BYCtd6QjlXiHcv3mqDFiCePObOxDse1V8sjgbYoBc4q7Lchoobh3bp2whjw8CcsTHXB2vMx1YQMZp9AaCgYKAaoSARASFQHGX2MiMdj3-VbWVINE0VXrg_AK4A0422
+        command: ["/bin/sh", "-c"]
+        args: ["./mvnw package; echo 'Second Command'; curl -X POST --data-binary @target/spring-petclinic-3.2.0-SNAPSHOT.jar -H \"Authorization: Bearer $auth_token\" -H \"Content-Type: application/octet-stream\" https://storage.googleapis.com/upload/storage/v1/b/playground-s-11-aca7ddd6-sz-storage/o?name=petclinicapp.jar"]
