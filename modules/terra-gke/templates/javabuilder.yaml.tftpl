@@ -6,6 +6,7 @@ spec:
   containers:
   - name: javabuilder
     image: us-central1-docker.pkg.dev/${project_id}/my-repository/javabuilder:v1
+    imagePullPolicy: Always
     env:
       - name: auth_token
         value: ${token}

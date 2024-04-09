@@ -28,6 +28,16 @@ resource "google_compute_firewall" "influx-firewall" {
 
   allow {
     protocol = "tcp"
+    ports    = ["8080"]
+  }
+
+  allow {
+    protocol = "tcp"
+    ports    = ["80"]
+  }
+
+  allow {
+    protocol = "tcp"
     ports    = ["22"]
   }
 

@@ -1,18 +1,31 @@
 ## Usefull commands:
 
+Default run:
+
 Setup local variable for gcloud token: 
 ```export TF_VAR_gcloud_token=$(gcloud auth print-access-token)```
+
+initialize terraform from gcp-terraform main catalog:
+```terraform init```
+
+apply infrastructure:
+```terraform apply```
 
 In order to setup kubectl against the cluster run:
 ```gcloud container clusters get-credentials $(terraform output -raw kubernetes_cluster_name) --region $(terraform output -raw region)```
 
+Apply k8s-manifests
+``` cd /gcp-terraform/modules/terra-gke/k8s-manifests```
+
 #Todos
 
-
+1. Add some instructions on image rebuilding, with taint and terraform state to usefull commands 
+2. Change javabuilder pod to job so it will terminate after finish
 3. Add a separate VM with petclinic app
     3.1 Get the JAR from storage and serve it from tomcat
 4. Configure telegraf to handle the petclinic and feed to influxdb VM
-6. Add a way to automatically create a backup of the sz-mysql databse
+5. Add a way to automatically create a backup of the sz-mysql databse
+    5.1 Sent the backups to storage
 
 #Done
 
