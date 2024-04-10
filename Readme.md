@@ -15,17 +15,16 @@ In order to setup kubectl against the cluster run:
 ```gcloud container clusters get-credentials $(terraform output -raw kubernetes_cluster_name) --region $(terraform output -raw region)```
 
 Apply k8s-manifests
-``` cd /gcp-terraform/modules/terra-gke/k8s-manifests```
+``` cd /modules/terra-gke/k8s-manifests```
 
 #Todos
 
 1. Add some instructions on image rebuilding, with taint and terraform state to usefull commands 
-2. Change javabuilder pod to job so it will terminate after finish
-3. Add a separate VM with petclinic app
-    3.1 Get the JAR from storage and serve it from tomcat
+2. Work on k8s monitoring with prometheus
 4. Configure telegraf to handle the petclinic and feed to influxdb VM
 5. Add a way to automatically create a backup of the sz-mysql databse
     5.1 Sent the backups to storage
+6. Set up JVM parameters monitoring throguh telegraf and jolookia 
 
 #Done
 
@@ -51,12 +50,15 @@ Terra-gke:
 4. Create k8s manifests to deploy the frontend app, add a load-balancer service so the app will be accesible for public.
 5. Automate the k8s manifests modifications to ajudst the project-id changes with terraform templates.
 6. Add a way to distribute a significant load from the data generator evenly across the nodes in a efficient mannor as a kubernetes job object.
+7. Change javabuilder pod to job so it will terminate after finish
 
 Terra-influx:
 1. Create a VM that will serve as a influx database
 2. Add configuration for the influx DB to monitor itself with telegraf
 3. Adjsut the configuration to automatically add new values of IP address or others based on a terraform infrastructure. (Using terraform templatefile function, with google startupscript and static external IP assigned to a VM)
 4. Create a GCP storage bucket as a base for storing jar's for tomcat server.
+5. Add a separate VM with petclinic app
+    5.1 Get the JAR from storage and serve it externally
 
 # GCP + Terraform training
 
@@ -65,7 +67,9 @@ This is a Terraform project consisting of two primary sub-projects: `terra-arti`
 ## Manual changes required for project:
 
 1.Change the terraform.tfvars project attribute to current gcp project
-2. Change the image to reflect the current gcp project id in /k8s/* deployments
+2.Run below command to set up the gcloud auth key: 
+
+```export TF_VAR_gcloud_token=$(gcloud auth print-access-token)```
 
 ## Sub-Project: terra-arti 
 
