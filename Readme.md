@@ -15,15 +15,16 @@ In order to setup kubectl against the cluster run:
 ```gcloud container clusters get-credentials $(terraform output -raw kubernetes_cluster_name) --region $(terraform output -raw region)```
 
 Apply k8s-manifests
-``` cd /gcp-terraform/modules/terra-gke/k8s-manifests```
+``` cd /modules/terra-gke/k8s-manifests```
 
 #Todos
 
 1. Add some instructions on image rebuilding, with taint and terraform state to usefull commands 
+2. Work on k8s monitoring with prometheus
 4. Configure telegraf to handle the petclinic and feed to influxdb VM
 5. Add a way to automatically create a backup of the sz-mysql databse
     5.1 Sent the backups to storage
-6. Set up JVM parameters monitoring thoguh telegraf and jolookia 
+6. Set up JVM parameters monitoring throguh telegraf and jolookia 
 
 #Done
 
