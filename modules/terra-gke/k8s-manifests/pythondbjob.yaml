@@ -12,7 +12,7 @@ metadata:
   namespace: data-loader
 spec:
   parallelism: 12
-  completions: 24
+  completions: 96
   template:
     metadata:
       name: pythondb-pod
@@ -20,7 +20,7 @@ spec:
       restartPolicy: Never
       containers:
         - name: pythondb-container
-          image: us-central1-docker.pkg.dev/playground-s-11-28289e62/my-repository/pythondb:v1
+          image: us-central1-docker.pkg.dev/playground-s-11-d6b57427/my-repository/pythondb:v1
           imagePullPolicy: Always
           command:
             - /bin/bash
