@@ -1,4 +1,4 @@
-project_id = "playground-s-11-d6b57427"
+project_id = "playground-s-11-f62c54cf"
 region     = "us-central1"
 image_list = ["pythondb", "sz_mysql", "utility", "flaskapp", "databaseflask", "javabuilder"]
 manifest_list = ["deployment", "pythondbjob", "javabuilder"]
