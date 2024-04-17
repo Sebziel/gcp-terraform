@@ -1,0 +1,72 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: petclinic-scripts-cm
+  namespace: locust
+data:
+  locustfile.py: |
+    from locust import HttpUser, task
+
+    class petclinic(HttpUser):
+      @task
+      def petclinic(self):
+          self.client.get("/")
+          self.client.get("/owners/find")
+          self.client.get("/owners?lastName=")
+          self.client.get("/vets.html")
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: funkyflask-scripts-cm
+  namespace: locust
+data:
+  funkyflasklocustfile.py: |
+    from locust import HttpUser, task
+
+    class pythonApp(HttpUser):
+      @task
+      def cardlist(self):
+          for index in range(6):
+            self.client.get("f'/card/{index}', name='/card'")
+
+      @task
+      def pythonApp(self):
+          self.client.get("/")
+          self.client.get("/card_list")
+          self.client.get("/FirstPage")
+          self.client.get("/ViewCounter")
+          self.client.get("/flowerList")
+          self.client.get("/techDetails")
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: databaseflask-scripts-cm
+  namespace: locust
+data:
+  pythonDbLocustfile.py: |
+    from locust import HttpUser, task
+
+    class pythonApp(HttpUser):
+      @task
+      def findUsers(self):
+          self.client.get("findUser?firstname=lisa")
+          self.client.get("findUser?firstname=andrew")
+          self.client.get("findUser?firstname=martin")
+
+      @task
+      def getUsers(self):
+          self.client.get("/api/getUsers")
+          self.client.get("/api/getUsers?count=50")
+          self.client.get("/api/getUsers?count=100")
+          self.client.get("api/getUsers?count=5")
+          self.client.get("api/getUsers?count=10")
+
+          
+
+          

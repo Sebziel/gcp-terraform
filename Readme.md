@@ -14,17 +14,17 @@ apply infrastructure:
 In order to setup kubectl against the cluster run:
 ```gcloud container clusters get-credentials $(terraform output -raw kubernetes_cluster_name) --region $(terraform output -raw region)```
 
-Apply k8s-manifests
-``` cd /modules/terra-gke/k8s-manifests```
+usefull prometheus queries:
+``` 100 - (avg by (instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100)```- Node % cpu usage
+``` sum(rate(container_cpu_usage_seconds_total{namespace="locust",container!="POD",container!=""}[5m])) by (pod) ``` - Locust cpu usage
 
 #Todos
 
-1. Add some instructions on image rebuilding, with taint and terraform state to usefull commands 
-2. Work on k8s monitoring with prometheus
-4. Configure telegraf to handle the petclinic and feed to influxdb VM
+3. Add some load test for python app and java app
+    3.1 Add distrubuted locust for simulation of higher loads
+    3.2 Add singular locust container to compare with distributed, and adjust the requests fo cpu and mem values
 5. Add a way to automatically create a backup of the sz-mysql databse
     5.1 Sent the backups to storage
-6. Set up JVM parameters monitoring throguh telegraf and jolookia 
 
 #Done
 
@@ -51,6 +51,7 @@ Terra-gke:
 5. Automate the k8s manifests modifications to ajudst the project-id changes with terraform templates.
 6. Add a way to distribute a significant load from the data generator evenly across the nodes in a efficient mannor as a kubernetes job object.
 7. Change javabuilder pod to job so it will terminate after finish
+8. Add tools to provide visibility of the cluster resources state - Done with prometheus and nodeexpoerter.
 
 Terra-influx:
 1. Create a VM that will serve as a influx database
@@ -59,6 +60,7 @@ Terra-influx:
 4. Create a GCP storage bucket as a base for storing jar's for tomcat server.
 5. Add a separate VM with petclinic app
     5.1 Get the JAR from storage and serve it externally
+6. Add monitoring of JVM and VM visible in influx, of the petclinic app with telegraf + joolokia.
 
 # GCP + Terraform training
 

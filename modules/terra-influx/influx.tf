@@ -1,7 +1,7 @@
 #VM Instance definition
 resource "google_compute_instance" "influx-vm" {
   name         = "influx-instance"
-  machine_type = "e2-medium"
+  machine_type = "e2-small"
   zone         = "us-central1-a"
   boot_disk {
     initialize_params {
@@ -24,7 +24,7 @@ resource "google_compute_instance" "influx-vm" {
 
 resource "google_compute_instance" "petclinic-app" {
   name         = "petclinic-instance"
-  machine_type = "e2-medium"
+  machine_type = "e2-small"
   zone         = "us-central1-a"
   service_account {
     email = "cli-service-account-1@${var.project_id}.iam.gserviceaccount.com"

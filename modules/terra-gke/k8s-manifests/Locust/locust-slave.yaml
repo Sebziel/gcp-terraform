@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: locust-worker
+  namespace: locust
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: locust-worker
+  template:
+    metadata:
+      labels:
+        app: locust-worker
+    spec:
+      containers:
+      - image: locustio/locust
+        imagePullPolicy: Always
+        name: locust-worker-container
+        args: ["--worker", "--master-host=locust-internal", "--locustfile", "/home/locust/funkyflask/funkyflasklocustfile.py"]
+        volumeMounts:
+          - mountPath: /home/locust
+            name: locust-scripts
+          - mountPath: /home/locust/funkyflask
+            name: funkyflask-locust
+          - mountPath: /home/locust/flaskdatabase
+            name: flaskdatabase-locust
+      restartPolicy: Always
+      volumes:
+      - name: locust-scripts
+        configMap:
+          name: petclinic-scripts-cm
+      - name: funkyflask-locust
+        configMap:
+          name: funkyflask-scripts-cm
+      - name: flaskdatabase-locust
+        configMap:
+          name: databaseflask-scripts-cm
