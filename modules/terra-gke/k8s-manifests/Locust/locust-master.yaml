@@ -24,8 +24,8 @@ spec:
       - image: locustio/locust
         imagePullPolicy: Always
         name: locust-master-container
-        #Available locustfiles: /home/locust/funkyflask/funkyflasklocustfile.py, /home/locust/flaskdatabase/pythonDbLocustfile.py, null (for petclinic) values have to be adjusted in slave as well
-        args: ["--master", "--locustfile", "/home/locust/funkyflask/funkyflasklocustfile.py"]
+        #Available --locustfiles /home/locust/funkyflask/funkyflasklocustfile.py, /home/locust/flaskdatabase/pythonDbLocustfile.py, null (for petclinic) values have to be adjusted in slave as well
+        args: ["--master"]
         volumeMounts:
           - mountPath: /home/locust
             name: locust-scripts

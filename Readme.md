@@ -19,10 +19,11 @@ usefull prometheus queries:
 ``` sum(rate(container_cpu_usage_seconds_total{namespace="locust",container!="POD",container!=""}[5m])) by (pod) ``` - Locust cpu usage
 
 #Todos
-
+1. Adjust readmes
 3. Add some load test for python app and java app
     3.1 Add distrubuted locust for simulation of higher loads
-    3.2 Add singular locust container to compare with distributed, and adjust the requests fo cpu and mem values
+    3.2 Add singular locust containers (preferebly a job) to compare with distributed, and adjust the requests for cpu and mem values
+    3.3 Pass the results of the tests to a storage
 5. Add a way to automatically create a backup of the sz-mysql databse
     5.1 Sent the backups to storage
 
@@ -52,6 +53,8 @@ Terra-gke:
 6. Add a way to distribute a significant load from the data generator evenly across the nodes in a efficient mannor as a kubernetes job object.
 7. Change javabuilder pod to job so it will terminate after finish
 8. Add tools to provide visibility of the cluster resources state - Done with prometheus and nodeexpoerter.
+9. Add load testing tool (locust)
+    9.1 Since locust supports two 'modes' with gui and with cli, I used both. IN K8s manifests, there's a locust.yaml which run's in headless mode (Todo - pass the results to gcp storage) in locust folder there's a deployment of master-follower architecture designed for more intense workloads as the followers might be scaled up if more simulated users are required.
 
 Terra-influx:
 1. Create a VM that will serve as a influx database

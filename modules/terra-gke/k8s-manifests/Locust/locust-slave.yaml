@@ -17,7 +17,7 @@ spec:
       - image: locustio/locust
         imagePullPolicy: Always
         name: locust-worker-container
-        args: ["--worker", "--master-host=locust-internal", "--locustfile", "/home/locust/funkyflask/funkyflasklocustfile.py"]
+        args: ["--worker", "--master-host=locust-internal"]
         volumeMounts:
           - mountPath: /home/locust
             name: locust-scripts

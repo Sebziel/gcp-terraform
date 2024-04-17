@@ -85,6 +85,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: utility-deployment
+  namespace: locust
 spec:
   replicas: 1
   selector:
@@ -95,17 +96,10 @@ spec:
       labels:
         app: utility
     spec:
-      volumes:
-      - name: mysql-storage
-        persistentVolumeClaim:
-          claimName: mysql-volumeclaim
       containers:
       - name: utility
         image: us-central1-docker.pkg.dev/playground-s-11-d4399c28/my-repository/utility:v1
         imagePullPolicy: Always
-        volumeMounts:
-        - mountPath: /volume
-          name: mysql-storage
 
 ---
 

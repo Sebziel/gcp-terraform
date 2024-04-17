@@ -2,6 +2,6 @@
 FROM ubuntu:latest
 
 RUN apt-get update
-RUN apt install python3-pip nano  mysql-client iputils-ping dnsutils -y
+RUN apt install python3-pip nano  mysql-client iputils-ping dnsutils curl -y
 
 CMD ["tail", "-f", "/dev/null"]
