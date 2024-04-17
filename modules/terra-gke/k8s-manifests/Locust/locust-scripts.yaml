@@ -12,3 +12,5 @@ data:
       def hello_world(self):
           self.client.get("/")
           self.client.get("/owners/find")
+          self.client.get("/owners?lastName=")
+          self.client.get("/vets.html")

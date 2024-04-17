@@ -4,7 +4,7 @@ metadata:
   name: locust-worker
   namespace: locust
 spec:
-  replicas: 2
+  replicas: 8
   selector:
     matchLabels:
       app: locust-worker
