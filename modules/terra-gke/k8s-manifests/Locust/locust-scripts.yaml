@@ -2,6 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: scripts-cm
+  namespace: locust
 data:
   locustfile.py: |
     from locust import HttpUser, task

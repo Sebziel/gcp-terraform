@@ -21,10 +21,9 @@ Apply k8s-manifests
 
 1. Add some instructions on image rebuilding, with taint and terraform state to usefull commands 
 2. Work on k8s monitoring with prometheus
-4. Configure telegraf to handle the petclinic and feed to influxdb VM
+3. Add some load test for python app and java app
 5. Add a way to automatically create a backup of the sz-mysql databse
     5.1 Sent the backups to storage
-6. Set up JVM parameters monitoring throguh telegraf and jolookia 
 
 #Done
 
@@ -59,6 +58,7 @@ Terra-influx:
 4. Create a GCP storage bucket as a base for storing jar's for tomcat server.
 5. Add a separate VM with petclinic app
     5.1 Get the JAR from storage and serve it externally
+6. Add monitoring of JVM and VM visible in influx, of the petclinic app with telegraf + joolokia.
 
 # GCP + Terraform training
 
