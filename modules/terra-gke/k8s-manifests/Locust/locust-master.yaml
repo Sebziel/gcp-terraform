@@ -24,10 +24,15 @@ spec:
       - image: locustio/locust
         imagePullPolicy: Always
         name: locust-master-container
-        args: ["--master"]
+        #Available locustfiles: /home/locust/funkyflask/funkyflasklocustfile.py, /home/locust/flaskdatabase/pythonDbLocustfile.py, null (for petclinic) values have to be adjusted in slave as well
+        args: ["--master", "--locustfile", "/home/locust/funkyflask/funkyflasklocustfile.py"]
         volumeMounts:
           - mountPath: /home/locust
             name: locust-scripts
+          - mountPath: /home/locust/funkyflask
+            name: funkyflask-locust
+          - mountPath: /home/locust/flaskdatabase
+            name: flaskdatabase-locust
         ports:
         - containerPort: 5557
           name: comm
@@ -39,7 +44,13 @@ spec:
       volumes:
       - name: locust-scripts
         configMap:
-          name: scripts-cm
+          name: petclinic-scripts-cm
+      - name: funkyflask-locust
+        configMap:
+          name: funkyflask-scripts-cm
+      - name: flaskdatabase-locust
+        configMap:
+          name: databaseflask-scripts-cm
 
 ---
 
@@ -55,12 +66,6 @@ spec:
       targetPort: 8089
       protocol: TCP
       name: http
-#    - port: 5557
-#      name: communication
-#      protocol: TCP
-#    - port: 5558
-#      name: communication-plus-1
-#      protocol: TCP
   selector:
     app: locust-master
 

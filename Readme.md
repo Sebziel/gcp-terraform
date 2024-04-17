@@ -20,8 +20,9 @@ usefull prometheus queries:
 
 #Todos
 
-1. Add some instructions on image rebuilding, with taint and terraform state to usefull commands 
 3. Add some load test for python app and java app
+    3.1 Add distrubuted locust for simulation of higher loads
+    3.2 Add singular locust container to compare with distributed, and adjust the requests fo cpu and mem values
 5. Add a way to automatically create a backup of the sz-mysql databse
     5.1 Sent the backups to storage
 
