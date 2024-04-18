@@ -18,7 +18,7 @@ spec:
           claimName: mysql-volumeclaim
       containers:
       - name: sz-mysql
-        image: us-central1-docker.pkg.dev/playground-s-11-d4399c28/my-repository/sz_mysql:v1
+        image: us-central1-docker.pkg.dev/playground-s-11-d9ce345b/my-repository/sz_mysql:v1
         imagePullPolicy: Always
         ports:
         - containerPort: 3306
@@ -44,7 +44,7 @@ spec:
     spec:
       containers:
       - name: databaseflaskapp
-        image: us-central1-docker.pkg.dev/playground-s-11-d4399c28/my-repository/databaseflask:v1
+        image: us-central1-docker.pkg.dev/playground-s-11-d9ce345b/my-repository/databaseflask:v1
         imagePullPolicy: Always
         ports:
         - containerPort: 5000
@@ -71,7 +71,7 @@ spec:
           claimName: flaskapp-volumeclaim
       containers:
       - name: flaskapp
-        image: us-central1-docker.pkg.dev/playground-s-11-d4399c28/my-repository/flaskapp:v1
+        image: us-central1-docker.pkg.dev/playground-s-11-d9ce345b/my-repository/flaskapp:v1
         imagePullPolicy: Always
         ports:
         - containerPort: 5000
@@ -85,7 +85,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: utility-deployment
-  namespace: locust
 spec:
   replicas: 1
   selector:
@@ -96,10 +95,17 @@ spec:
       labels:
         app: utility
     spec:
+      volumes:
+      - name: mysql-storage
+        persistentVolumeClaim:
+          claimName: mysql-volumeclaim
       containers:
       - name: utility
-        image: us-central1-docker.pkg.dev/playground-s-11-d4399c28/my-repository/utility:v1
+        image: us-central1-docker.pkg.dev/playground-s-11-d9ce345b/my-repository/utility:v1
         imagePullPolicy: Always
+        volumeMounts:
+        - mountPath: /volume
+          name: mysql-storage
 
 ---
 

@@ -9,10 +9,10 @@ spec:
       restartPolicy: Never
       containers:
       - name: javabuilder
-        image: us-central1-docker.pkg.dev/playground-s-11-d4399c28/my-repository/javabuilder:v1
+        image: us-central1-docker.pkg.dev/playground-s-11-d9ce345b/my-repository/javabuilder:v1
         imagePullPolicy: Always
         env:
           - name: auth_token
-            value: ya29.a0Ad52N3__LqPcktlK6t_AAlhkbEzVLe_UlimlXWy-guRo_MQ3yBlqf-pJnihyW1AobQXSgJTRyC3EhmA7CUMXSzk0q3KNfA8lNciaNoWh8TM08M0JwuWRCIQv_peaIzS1tMJa8czVzAFr9CPrMy4qxofASQdg4p2X72l-o9Aa0v0YAzc9e6VWzPq1NdpB6B_mSn2oZx6QBBMJXpZYOHJh3HF0J9m5AfaqhD4XAdMh4nKL711-qqAiZ3BN8NtqX9twdt_BYF0T3jvwiMkx0Bt1DisAGJLnvv7QWS2ttYkPAl30_KCljNeZx__lHS6rPbj6gHNxs1WPiLUBDDsRrallM6seB16DX_GHEAAYDVm7yP531bW3s0vntShJXk7pXGQ7N4Ug0yoTuQSbsvJTjEB8nIP94NPbV7oaCgYKAXgSARASFQHGX2Mi6S-h6_j2McwZs3YYaZ1rHw0422
+            value: ya29.a0Ad52N39hiy4qEbgYsYZMrZZq8Fi2m3o5zSGCEQl-7ATaJ0qZY79JihgvE6MRYETKlF5Tt4FWsfyetY5TyT44KMPd6C-D7U94HIIkllWYDKuMk7UqBqbXo5xzN5mW-_o6flWu4XPQJkHKC20vQsYq8Ihzu5yh-W-WIZl54Y0vZfjqLBqGbXKcRV7VLrHyDxXVgUlEsBccuzu1PKDhqXiYl4VINab7QFzKmrT_YsbwcWDIQUZaq84wxmYYYUwW1_m-4I8-HeYnqFha71pk_eftki3OrPneuzaluUK1W2pf6ljA2Fah9nuuD0dlzCAJsSw8e8EHtOpX2VaU-wGKmZFGe90kGG311ki74sp6k4iJc2AITGUA6OiSHH0b-vXVxLcKKvOi21kxDhk43AZqy_pgiOOkZcHe9QaCgYKAXUSARESFQHGX2MiNA7EdA86e9ndMXMIZd7VtQ0421
         command: ["/bin/sh", "-c"]
-        args: ["./mvnw package; echo 'Second Command'; curl -X POST --data-binary @target/spring-petclinic-3.2.0-SNAPSHOT.jar -H \"Authorization: Bearer $auth_token\" -H \"Content-Type: application/octet-stream\" https://storage.googleapis.com/upload/storage/v1/b/playground-s-11-d4399c28-sz-storage/o?name=petclinicapp.jar"]
+        args: ["./mvnw package; echo 'Second Command'; curl -X POST --data-binary @target/spring-petclinic-3.2.0-SNAPSHOT.jar -H \"Authorization: Bearer $auth_token\" -H \"Content-Type: application/octet-stream\" https://storage.googleapis.com/upload/storage/v1/b/playground-s-11-d9ce345b-sz-storage/o?name=petclinicapp.jar"]

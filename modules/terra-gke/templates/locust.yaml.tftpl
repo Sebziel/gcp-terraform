@@ -16,17 +16,51 @@ spec:
       name: funkyflask-pod
     spec:
       restartPolicy: Never
-      containers:
+      initContainers:
       - name: funkyflask-locust-container
         image: locustio/locust
-        args: ["-H http://load-balancer.default.svc.cluster.local","-f funkyflasklocustfile.py", "--exit-code-on-error", "0", "-u 5", "-r 1.0", "-t", "1m", "--headless"]
+        args:
+        - "-H"
+        - "http://load-balancer.default.svc.cluster.local"
+        - "-f"
+        - "funkyflasklocustfile.py"
+        - "--csv"
+        - "/home/test-results/funkyFlaskTestResults"
+        - "--csv-full-history"
+        - "--exit-code-on-error"
+        - "0"
+        - "-u"
+        - "5"
+        - "-r"
+        - "1.0"
+        - "-t"
+        - "1m"
+        - "--headless"
         volumeMounts:
           - mountPath: /home/locust
             name: locust-scripts
+          - mountPath: /home/test-results
+            name: test-results
+      containers:
+        - name: utility-container
+          image: us-central1-docker.pkg.dev/playground-s-11-d9ce345b/my-repository/utility:v1
+          imagePullPolicy: Always
+          env:
+          - name: auth_token
+            value: ${token}
+          - name: googleStorageUrl
+            value: https://storage.googleapis.com/upload/storage/v1/b
+          volumeMounts:
+            - mountPath: /home/test-results
+              name: test-results
+          command: ["/bin/bash",  "-c"]
+          args: ["zip -r /home/test-results/testResults.zip /home/test-results/; curl -X POST --data-binary @/home/test-results/testResults.zip  -H \"Authorization: Bearer $auth_token\" -H \"Content-Type: application/octet-stream\" $googleStorageUrl/playground-s-11-d9ce345b-sz-storage/o?name=funkyflaskTestResults.zip"]
       volumes:
       - name: locust-scripts
         configMap:
           name: funkyflask-scripts-cm
+      - name: test-results
+        emptyDir: {}
   backoffLimit: 2
   completions: 1
 
@@ -44,17 +78,51 @@ spec:
       name: pythondb-pod
     spec:
       restartPolicy: Never
-      containers:
+      initContainers:
       - name: pythondb-locust-container
         image: locustio/locust
-        args: ["-H http://load-balancer-databaseflaskapp.default.svc.cluster.local","-f pythonDbLocustfile.py", "--exit-code-on-error", "0", "-u 5", "-r 1.0", "-t", "1m", "--headless"]
+        args:
+        - "-H"
+        - "http://load-balancer-databaseflaskapp.default.svc.cluster.local"
+        - "-f"
+        - "pythonDbLocustfile.py"
+        - "--csv"
+        - "/home/test-results/pythonDbTestResults"
+        - "--csv-full-history"
+        - "--exit-code-on-error"
+        - "0"
+        - "-u"
+        - "5"
+        - "-r"
+        - "1.0"
+        - "-t"
+        - "1m"
+        - "--headless"
         volumeMounts:
           - mountPath: /home/locust
             name: locust-scripts
+          - mountPath: /home/test-results
+            name: test-results
+      containers:
+        - name: utility-container
+          image: us-central1-docker.pkg.dev/playground-s-11-d9ce345b/my-repository/utility:v1
+          imagePullPolicy: Always
+          env:
+          - name: auth_token
+            value: ${token}
+          - name: googleStorageUrl
+            value: https://storage.googleapis.com/upload/storage/v1/b
+          volumeMounts:
+            - mountPath: /home/test-results
+              name: test-results
+          command: ["/bin/bash",  "-c"]
+          args: ["zip -r /home/test-results/testResults.zip /home/test-results/; curl -X POST --data-binary @/home/test-results/testResults.zip  -H \"Authorization: Bearer $auth_token\" -H \"Content-Type: application/octet-stream\" $googleStorageUrl/playground-s-11-d9ce345b-sz-storage/o?name=pythonDbTestResults.zip"]
       volumes:
       - name: locust-scripts
         configMap:
           name: databaseflask-scripts-cm
+      - name: test-results
+        emptyDir: {}
   backoffLimit: 2
   completions: 1
 
