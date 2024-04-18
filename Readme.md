@@ -97,14 +97,30 @@ In order to setup kubectl against the cluster run:
 ```gcloud container clusters get-credentials $(terraform output -raw kubernetes_cluster_name) --region $(terraform output -raw region)```
 
 The terra-gke project also generates k8s manifests, that can later on be deployed to kubernetes cluster. Below is brief overview of templates:
+
 1. Deployment - Contains deployments of sz-mysql (database), pythondb (Api using database), funkyflask (old flask app) and related objects.
 2. Javabuilder
 3. locust
 4. Pythondbjob
 
 Additionaly some manifests doesn't require templates to handle variables, hence they're hard-coded.
+The project includes prometheus monitoring, although it's not set up with visualization tools.
+
+usefull prometheus queries:
+``` 100 - (avg by (instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100)```- Node % cpu usage
+``` sum(rate(container_cpu_usage_seconds_total{namespace="locust",container!="POD",container!=""}[5m])) by (pod) ``` - Locust cpu usage
 
 ## Sub-Project: terra-influx
+
+The purpose of the project is to manage influx and petclinic 
+
+Two VM's for influx and petclinic app (build by terra-gke javabuilder) are created by terraform. 
+Along with influx VM configuration is generated, also for telegraf.
+Same goes for petclinic app, joolokia agent is set up with startup scripts, and the data of the JVM is sent to influxDB. 
+
+A separate static extenral ip is required, as in order for the ip address to be passed o telegraf configuration, the resource (VM) have to be created first, hence it's not possible to assign the externalIP for the startup script. 
+
+As an alternative, the remote-exec provisioner could be used to modify the value, but it get's quite complex while using ACG environments and limitations based on the time-span of the project and GCP IAM not available. 
 
 ## Important Note
 
