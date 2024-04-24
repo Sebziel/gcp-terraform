@@ -1,3 +1,4 @@
+#To be deleted, add some notes that before setting up webui for locust, it's required to run the loust.yaml defined by terraform template
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -30,7 +31,7 @@ data:
       @task
       def cardlist(self):
           for index in range(6):
-            self.client.get("f'/card/{index}', name='/card'")
+            self.client.get(f'/card/{index}', name='/card')
 
       @task
       def pythonApp(self):

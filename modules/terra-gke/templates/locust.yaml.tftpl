@@ -1,0 +1,197 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: locust
+
+---
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: funkyflask-locust-job
+  namespace: locust
+spec:
+  template:
+    metadata:
+      name: funkyflask-pod
+    spec:
+      restartPolicy: Never
+      initContainers:
+      - name: funkyflask-locust-container
+        image: locustio/locust
+        args:
+        - "-H"
+        - "http://load-balancer.default.svc.cluster.local"
+        - "-f"
+        - "funkyflasklocustfile.py"
+        - "--csv"
+        - "/home/test-results/funkyFlaskTestResults"
+        - "--csv-full-history"
+        - "--exit-code-on-error"
+        - "0"
+        - "-u"
+        - "5"
+        - "-r"
+        - "1.0"
+        - "-t"
+        - "1m"
+        - "--headless"
+        volumeMounts:
+          - mountPath: /home/locust
+            name: locust-scripts
+          - mountPath: /home/test-results
+            name: test-results
+      containers:
+        - name: utility-container
+          image: us-central1-docker.pkg.dev/playground-s-11-d9ce345b/my-repository/utility:v1
+          imagePullPolicy: Always
+          env:
+          - name: auth_token
+            value: ${token}
+          - name: googleStorageUrl
+            value: https://storage.googleapis.com/upload/storage/v1/b
+          volumeMounts:
+            - mountPath: /home/test-results
+              name: test-results
+          command: ["/bin/bash",  "-c"]
+          args: ["zip -r /home/test-results/testResults.zip /home/test-results/; curl -X POST --data-binary @/home/test-results/testResults.zip  -H \"Authorization: Bearer $auth_token\" -H \"Content-Type: application/octet-stream\" $googleStorageUrl/playground-s-11-d9ce345b-sz-storage/o?name=funkyflaskTestResults.zip"]
+      volumes:
+      - name: locust-scripts
+        configMap:
+          name: funkyflask-scripts-cm
+      - name: test-results
+        emptyDir: {}
+  backoffLimit: 2
+  completions: 1
+
+
+---
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pythondb-locust-job
+  namespace: locust
+spec:
+  template:
+    metadata:
+      name: pythondb-pod
+    spec:
+      restartPolicy: Never
+      initContainers:
+      - name: pythondb-locust-container
+        image: locustio/locust
+        args:
+        - "-H"
+        - "http://load-balancer-databaseflaskapp.default.svc.cluster.local"
+        - "-f"
+        - "pythonDbLocustfile.py"
+        - "--csv"
+        - "/home/test-results/pythonDbTestResults"
+        - "--csv-full-history"
+        - "--exit-code-on-error"
+        - "0"
+        - "-u"
+        - "5"
+        - "-r"
+        - "1.0"
+        - "-t"
+        - "1m"
+        - "--headless"
+        volumeMounts:
+          - mountPath: /home/locust
+            name: locust-scripts
+          - mountPath: /home/test-results
+            name: test-results
+      containers:
+        - name: utility-container
+          image: us-central1-docker.pkg.dev/playground-s-11-d9ce345b/my-repository/utility:v1
+          imagePullPolicy: Always
+          env:
+          - name: auth_token
+            value: ${token}
+          - name: googleStorageUrl
+            value: https://storage.googleapis.com/upload/storage/v1/b
+          volumeMounts:
+            - mountPath: /home/test-results
+              name: test-results
+          command: ["/bin/bash",  "-c"]
+          args: ["zip -r /home/test-results/testResults.zip /home/test-results/; curl -X POST --data-binary @/home/test-results/testResults.zip  -H \"Authorization: Bearer $auth_token\" -H \"Content-Type: application/octet-stream\" $googleStorageUrl/playground-s-11-d9ce345b-sz-storage/o?name=pythonDbTestResults.zip"]
+      volumes:
+      - name: locust-scripts
+        configMap:
+          name: databaseflask-scripts-cm
+      - name: test-results
+        emptyDir: {}
+  backoffLimit: 2
+  completions: 1
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: petclinic-scripts-cm
+  namespace: locust
+data:
+  locustfile.py: |
+    from locust import HttpUser, task
+
+    class petclinic(HttpUser):
+      @task
+      def petclinic(self):
+          self.client.get("/")
+          self.client.get("/owners/find")
+          self.client.get("/owners?lastName=")
+          self.client.get("/vets.html")
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: funkyflask-scripts-cm
+  namespace: locust
+data:
+  funkyflasklocustfile.py: |
+    from locust import HttpUser, task
+
+    class pythonApp(HttpUser):
+      @task
+      def cardlist(self):
+          for index in range(6):
+            self.client.get(f'/card/{index}', name='/card')
+
+      @task
+      def pythonApp(self):
+          self.client.get("/")
+          self.client.get("/card_list")
+          self.client.get("/FirstPage")
+          self.client.get("/ViewCounter")
+          self.client.get("/flowerList")
+          self.client.get("/techDetails")
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: databaseflask-scripts-cm
+  namespace: locust
+data:
+  pythonDbLocustfile.py: |
+    from locust import HttpUser, task
+
+    class pythonApp(HttpUser):
+      @task
+      def findUsers(self):
+          self.client.get("/api/findUser?firstname=lisa")
+          self.client.get("/api/findUser?firstname=andrew")
+          self.client.get("/api/findUser?firstname=martin")
+
+      @task
+      def getUsers(self):
+          self.client.get("/api/getUsers")
+          self.client.get("/api/getUsers?count=50")
+          self.client.get("/api/getUsers?count=100")
+          self.client.get("/api/getUsers?count=5")
+          self.client.get("/api/getUsers?count=10")
