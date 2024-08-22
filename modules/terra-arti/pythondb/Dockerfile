@@ -3,9 +3,10 @@ FROM ubuntu:latest
 
 COPY . /app
 RUN apt-get update
-RUN apt install python3-pip nano  mysql-client iputils-ping -y
+RUN apt install python3-pip nano  mysql-client iputils-ping python3-venv -y
+RUN python3 -m venv /app/venv
 WORKDIR /app
-RUN pip3 install .
+RUN /app/venv/bin/pip install .
 
 #Commented out, as in this project k8s is used, and the amount of users is defined in the deployment file.
 #CMD ["pythondb", "-u 50"]
