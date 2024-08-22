@@ -47,7 +47,7 @@ spec:
           imagePullPolicy: Always
           env:
           - name: auth_token
-            value: ya29.a0AcM612yQVHhVpAa-VQpDvviPA-gZY0xcXgl4gC2Hn8Xs416qmkkdnPa74sBraFXvhE4c4Oq2GxmYt8URMKqAmu3dmzuWBhVjDSm-6sUQwEzVzKMwaQF5Jh_M8t9GDZLPL_xpUllfLfPE_uXn7eT_WE_tWLzp3X-W8ScHt9b5mrt5GiKyKJv4sO7fkJ0oHYzHQ82KMhOg5vr0ouLkiUfYrQz1ZbxU7hUBQaD1N_kbimPneW04Lzt1b07M6Q0ABx_H7LQ6V_bsL2OEM9fIslKbJjZp1VVKIZ2iJlqY_0-c2WYR1sfSspaG9UUysHStf7JtOLrLpJDcDD-mdHso7LQx_xXzqdDwdV3Kx4FZrpv2BHbMbj10BVJnPzXWnQ468EZ9IUKIzb426SleTx3PcROfDfhY19VMSAaCgYKAQQSARMSFQHGX2MiAMzQkBpTZ-lEvxeomyEYjA0421
+            value: ya29.a0AcM612zOTxW0DRKbvgvlur2qA38zwxFVZE2neA72qntCKY-7Q6KEoZ35RVRvxTWNsgi9KG7RcnCFpLHgFivUWhUZhpVX01ZgsfbNaOcFZR9Sn_TYaNuaSc0x_LXUs7HmC4X3p-XRWi63AT-1n79itjlja10wbEeg0_KcafMjVmE2QtRcdEZG26G_4xaL3Aq6k2GSezQcXG9hFqy8awmw6iQPYIR35Yc-MauEIXZLM8ZYmZFI_7YAOGsmhzXKy4rN23VUGhH8GRwAlSXMZ9XcONz3cU3VQytMbi-cYXNzLeqlUMTiLwavmntzdhoyIT8yizPhONtMfixHc6xzN3S7OrcxuzgAVTuhyibGDiZ_SHLPhFKtESWQX4RZpmJkl0HT9UwYCkanIlVywPdFex3vvzz47CHObNh3aCgYKAU4SARESFQHGX2MiLEZgq4H310QjiEwp0c5q8w0423
           - name: googleStorageUrl
             value: https://storage.googleapis.com/upload/storage/v1/b
           volumeMounts:
@@ -109,7 +109,7 @@ spec:
           imagePullPolicy: Always
           env:
           - name: auth_token
-            value: ya29.a0AcM612yQVHhVpAa-VQpDvviPA-gZY0xcXgl4gC2Hn8Xs416qmkkdnPa74sBraFXvhE4c4Oq2GxmYt8URMKqAmu3dmzuWBhVjDSm-6sUQwEzVzKMwaQF5Jh_M8t9GDZLPL_xpUllfLfPE_uXn7eT_WE_tWLzp3X-W8ScHt9b5mrt5GiKyKJv4sO7fkJ0oHYzHQ82KMhOg5vr0ouLkiUfYrQz1ZbxU7hUBQaD1N_kbimPneW04Lzt1b07M6Q0ABx_H7LQ6V_bsL2OEM9fIslKbJjZp1VVKIZ2iJlqY_0-c2WYR1sfSspaG9UUysHStf7JtOLrLpJDcDD-mdHso7LQx_xXzqdDwdV3Kx4FZrpv2BHbMbj10BVJnPzXWnQ468EZ9IUKIzb426SleTx3PcROfDfhY19VMSAaCgYKAQQSARMSFQHGX2MiAMzQkBpTZ-lEvxeomyEYjA0421
+            value: ya29.a0AcM612zOTxW0DRKbvgvlur2qA38zwxFVZE2neA72qntCKY-7Q6KEoZ35RVRvxTWNsgi9KG7RcnCFpLHgFivUWhUZhpVX01ZgsfbNaOcFZR9Sn_TYaNuaSc0x_LXUs7HmC4X3p-XRWi63AT-1n79itjlja10wbEeg0_KcafMjVmE2QtRcdEZG26G_4xaL3Aq6k2GSezQcXG9hFqy8awmw6iQPYIR35Yc-MauEIXZLM8ZYmZFI_7YAOGsmhzXKy4rN23VUGhH8GRwAlSXMZ9XcONz3cU3VQytMbi-cYXNzLeqlUMTiLwavmntzdhoyIT8yizPhONtMfixHc6xzN3S7OrcxuzgAVTuhyibGDiZ_SHLPhFKtESWQX4RZpmJkl0HT9UwYCkanIlVywPdFex3vvzz47CHObNh3aCgYKAU4SARESFQHGX2MiLEZgq4H310QjiEwp0c5q8w0423
           - name: googleStorageUrl
             value: https://storage.googleapis.com/upload/storage/v1/b
           volumeMounts:

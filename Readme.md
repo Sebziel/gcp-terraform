@@ -1,21 +1,3 @@
-## Basic usage:
-
-Change the google project id in root directory - terraform.tfvars file.
-
-Setup local variable for gcloud token: 
-```export TF_VAR_gcloud_token=$(gcloud auth print-access-token)```
-
-initialize terraform from gcp-terraform main catalog and apply infrastructure:
-```terraform init``` & ```terraform apply```
-
-(Optionally) In order to setup kubectl against the cluster run:
-```gcloud container clusters get-credentials $(terraform output -raw kubernetes_cluster_name) --region $(terraform output -raw region)```
-
-Example prometheus queries:
-``` 100 - (avg by (instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100)```- Node % cpu usage
-``` sum(rate(container_cpu_usage_seconds_total{namespace="locust",container!="POD",container!=""}[5m])) by (pod) ``` - Locust cpu usage
-
-
 #Expected outcome
 Application created 
 What are the addresses and functionalities ? 
@@ -34,7 +16,25 @@ What are the addresses and functionalities ?
 This is a Terraform project consisting of three primary sub-projects: `terra-arti`, `terra-gke` and `terra-influx`.
 Project is designed to be run on a temporary GCP account provided by ACG. Hence multiple constraints have been faced and not all best practices implemented.
 
-**Note** Because of the training nature of the project, not all solutions are efficient or following best practices. In some cases, work-arounds were used just to work with different architecture. Example would be including DB passwords directly in dockerfiles or adding gcloud authorization token into k8s manifests. Taking into consideration the temporary environment there is no risk of actuall damage - It will require further work though.
+**Note** Because of the training nature of the project, not all solutions are efficient or following best practices. In some cases, work-arounds were used just to work with different architecture or tools. Example would be including DB passwords directly in dockerfiles or adding gcloud authorization token into k8s manifests. Taking into consideration the temporary environment the risk is limited. It would require further work though.
+
+## Basic usage:
+
+Change the google project id in root directory - terraform.tfvars file.
+
+Setup local variable for gcloud token: 
+```export TF_VAR_gcloud_token=$(gcloud auth print-access-token)```
+
+initialize terraform from gcp-terraform main catalog and apply infrastructure:
+```terraform init``` & ```terraform apply```
+
+(Optionally) In order to setup kubectl against the cluster run:
+```gcloud container clusters get-credentials $(terraform output -raw kubernetes_cluster_name) --region $(terraform output -raw region)```
+
+Example prometheus queries:
+``` 100 - (avg by (instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100)```- Node % cpu usage
+``` sum(rate(container_cpu_usage_seconds_total{namespace="locust",container!="POD",container!=""}[5m])) by (pod) ``` - Locust cpu usage
+
 
 ## Sub-Project: terra-arti 
 
@@ -46,7 +46,7 @@ Most of the images managed by the terra-arti module have their own readme files 
 
 In the module you will also find shell scripts to activate GCP APIs (`activateApis.sh`) and to build images (`build_image.sh`).
 
-#Expected outcome 
+### Expected outcome 
 
 Artifact repository created. 
 Multiple docker images build and pushed to created repository. 
@@ -74,9 +74,17 @@ Example prometheus queries:
 ``` 100 - (avg by (instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100)```- Node % cpu usage
 ``` sum(rate(container_cpu_usage_seconds_total{namespace="locust",container!="POD",container!=""}[5m])) by (pod) ``` - Locust cpu usage
 
-#Expected outcome
+### Expected outcome
 Kubernetes manifests created in gcp-terraform/modules/terra-gke/k8s-manifests.
 Applying the manifests should result in:
+
+* 'Funky flask app' up and running a simple http flask application
+* 'FlaskDb App' a basic api that query the DB for user details.
+* 'JavaBuilder' a container which performs the build of spring petclinic app and uploads it to storage bucket.
+* 'pythondb-job' a kubernetes cronjob that loads randomly generated users data to the database, allowing to do that with multiple pods in parallel 
+* 'prometheus' 
+* 'locust'
+
 
 **Note** Running ```kubectl get services``` will provide with the IP's of loadbalancers which can be accessed to see the outcome. Example below: 
 
@@ -89,19 +97,19 @@ load-balancer-databaseflaskapp   LoadBalancer   34.118.231.142   *34.28.164.170*
 sz-mysql-service                 ClusterIP      34.118.229.3     <none>          3306/TCP       5m14s
 ```
 Based on above example accesing 
-```34.31.12.41:80``` should grant access to 'funky flask app' a simple http flask application. 
-```34.28.164.170:80``` should grant access to basic flask-based api that queries the database. 
-    Two endpoint are available:
-    /api/getUsers - that lists all the users in json format. Allows to limit the number of requested users with count parameter. e.g. ```http://34.28.164.170/api/getUsers?count=10``` will display 10 users. 
-    /api/findUser - Finds a user with a 3 letters of a name or surname. e.g. ```http://34.28.164.170/api/findUser?firstname=Kristen``` will display all users with 'Kirsten' as a first name.
+* ```34.31.12.41:80``` should grant access to 'funky flask app' a simple http flask application.
+* ```34.28.164.170:80``` should grant access to basic flask-based api that queries the database. Two endpoint are available:
+ * /api/getUsers - that lists all the users in json format. Allows to limit the number of requested users with count parameter. e.g. ```http://34.28.164.170/api/getUsers?count=10``` will display 10 users.
+ * /api/findUser - Finds a user with a 3 letters of a name or surname. e.g. ```http://34.28.164.170/api/findUser?firstname=Kristen``` will display all users with 'Kirsten' as a first name.
 
 ## Sub-Project: terra-influx
 
 The purpose of the project is to manage influx and petclinic 
 
-Two VM's for influx and petclinic app (build by terra-gke javabuilder) are created by terraform. 
-Along with influx VM configuration is generated, also for telegraf.
-Same goes for petclinic app, joolokia agent is set up with startup scripts, and the data of the JVM is sent to influxDB. 
+Two VM's are created, the startup scripts are generated and adjusted by terraform.
+* Inlfux - Vm used for monitoring of Petclinic App. Contains influx and telegraf tools installed.
+* Petclinic App - Contains example java springboot application build by terra-gke 'javabuilder'. Contains Joolokia Agent 
+**Note** more details on VM's and tools configuration can be found in /gcp-terraform/terra-influx/script-templates
 
 A separate static extenral ip is required, as in order for the ip address to be passed o telegraf configuration, the resource (VM) have to be created first, hence it's not possible to assign the externalIP for the startup script. 
 
@@ -111,7 +119,7 @@ As an alternative, the remote-exec provisioner could be used to modify the value
 
 The `terraform.tfstate` and `.terraform.tfstate.lock.info` files, which are typically used to store workspace states, are listed in the .gitignore file as they should not be tracked in git repository. Since the environment is temporary, the tfstate files are kept locally, and moving them to external storage was not in scope of the project. 
 
-#Done
+#### Below is a list of assumptions for project creation. 
 
 Terra-Arti:
 1. Create a IAAC for GCP Artifactory registry
