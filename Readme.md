@@ -15,6 +15,11 @@ Example prometheus queries:
 ``` 100 - (avg by (instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100)```- Node % cpu usage
 ``` sum(rate(container_cpu_usage_seconds_total{namespace="locust",container!="POD",container!=""}[5m])) by (pod) ``` - Locust cpu usage
 
+
+#Expected outcome
+Application created 
+What are the addresses and functionalities ? 
+
 #Todos
 1. Adjust readmes
 3. Add some load test for python app and java app
@@ -29,7 +34,7 @@ Example prometheus queries:
 This is a Terraform project consisting of three primary sub-projects: `terra-arti`, `terra-gke` and `terra-influx`.
 Project is designed to be run on a temporary GCP account provided by ACG. Hence multiple constraints have been faced and not all best practices implemented.
 
-**Note** Because of the training nature of the project, not all solutions are efficient or following best practices. In some cases, work-arounds were used just to work with different architecture. Example would be including DB passwords directly in dockerfiles or adding gcloud authorization token into k8s manifests. 
+**Note** Because of the training nature of the project, not all solutions are efficient or following best practices. In some cases, work-arounds were used just to work with different architecture. Example would be including DB passwords directly in dockerfiles or adding gcloud authorization token into k8s manifests. Taking into consideration the temporary environment there is no risk of actuall damage - It will require further work though.
 
 ## Sub-Project: terra-arti 
 
@@ -41,19 +46,23 @@ Most of the images managed by the terra-arti module have their own readme files 
 
 In the module you will also find shell scripts to activate GCP APIs (`activateApis.sh`) and to build images (`build_image.sh`).
 
+#Expected outcome 
+
+Artifact repository created. 
+Multiple docker images build and pushed to created repository. 
+
 ## Sub-Project: terra-gke
 
 The purpose of the project is to manage k8s cluster and manifests.
 
 This sub-project contains the definitions for the Google Kubernetes Engine (GKE) cluster. The main Terraform script here is `gke.tf`, with complementary scripts for output (`outputs.tf`) and VPC configuration (`vpc.tf`). The amount of nodes per zone might be adjusted and is defined in terraform.tfvars 'gke_num_nodes'. Keep in mind the ACG limits of 10 vcpu's.
-The Terraform state for the GKE is kept in `terraform.tfstate`, and a variables file can be found as `terraform.tfvars` for any environment-specific configurations.
 
 In order to setup kubectl against the cluster run:
 ```gcloud container clusters get-credentials $(terraform output -raw kubernetes_cluster_name) --region $(terraform output -raw region)```
 
-The terra-gke project also generates k8s manifests, that can later on be deployed to kubernetes cluster. Below is brief overview of templates:
+The terra-gke project also generates k8s manifests, that can later on have to be deployed to kubernetes cluster. Below is brief overview of templates:
 
-1. Deployment - Contains deployments of sz-mysql (database), pythondb (Api using database), funkyflask (old flask app) and related objects.
+1. Deployment - Contains deployments of sz-mysql (database), pythondb (Python script that loads random data to database), funkyflask (old http flask app), databaseflask app (api to list or find users with http) and related objects.
 2. Javabuilder
 3. locust
 4. Pythondbjob
@@ -61,9 +70,30 @@ The terra-gke project also generates k8s manifests, that can later on be deploye
 Additionaly some manifests doesn't require templates to handle variables, hence they're hard-coded.
 The project includes prometheus monitoring, although it's not set up with visualization tools.
 
-usefull prometheus queries:
+Example prometheus queries:
 ``` 100 - (avg by (instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100)```- Node % cpu usage
 ``` sum(rate(container_cpu_usage_seconds_total{namespace="locust",container!="POD",container!=""}[5m])) by (pod) ``` - Locust cpu usage
+
+#Expected outcome
+Kubernetes manifests created in gcp-terraform/modules/terra-gke/k8s-manifests.
+Applying the manifests should result in:
+
+**Note** Running ```kubectl get services``` will provide with the IP's of loadbalancers which can be accessed to see the outcome. Example below: 
+
+```
+kubectl get services
+NAME                             TYPE           CLUSTER-IP       EXTERNAL-IP     PORT(S)        AGE
+kubernetes                       ClusterIP      34.118.224.1     <none>          443/TCP        153m
+load-balancer                    LoadBalancer   34.118.239.253   *34.31.12.41*     80:31971/TCP   5m15s
+load-balancer-databaseflaskapp   LoadBalancer   34.118.231.142   *34.28.164.170*   80:32593/TCP   5m14s
+sz-mysql-service                 ClusterIP      34.118.229.3     <none>          3306/TCP       5m14s
+```
+Based on above example accesing 
+```34.31.12.41:80``` should grant access to 'funky flask app' a simple http flask application. 
+```34.28.164.170:80``` should grant access to basic flask-based api that queries the database. 
+    Two endpoint are available:
+    /api/getUsers - that lists all the users in json format. Allows to limit the number of requested users with count parameter. e.g. ```http://34.28.164.170/api/getUsers?count=10``` will display 10 users. 
+    /api/findUser - Finds a user with a 3 letters of a name or surname. e.g. ```http://34.28.164.170/api/findUser?firstname=Kristen``` will display all users with 'Kirsten' as a first name.
 
 ## Sub-Project: terra-influx
 
@@ -79,7 +109,7 @@ As an alternative, the remote-exec provisioner could be used to modify the value
 
 ## Important Note
 
-The `terraform.tfstate` and `.terraform.tfstate.lock.info` files, which are typically used to store workspace states, are listed in the .gitignore file as they should not be tracked in git repository.
+The `terraform.tfstate` and `.terraform.tfstate.lock.info` files, which are typically used to store workspace states, are listed in the .gitignore file as they should not be tracked in git repository. Since the environment is temporary, the tfstate files are kept locally, and moving them to external storage was not in scope of the project. 
 
 #Done
 

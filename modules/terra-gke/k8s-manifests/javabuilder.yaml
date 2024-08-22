@@ -13,6 +13,6 @@ spec:
         imagePullPolicy: Always
         env:
           - name: auth_token
-            value: ya29.a0AcM612yBEErqZDVDFErxaMo3hTCtDkICjDgGsvTfnkzfE531PTuVqm0EZYZhjC0LN5X76Y1T8W45Wsa0Nu1iNlfLRH46RwnnVe1UvAQQlC4sNcy1mNJipuvbVq0XqeKPcWMDlq-QCHiFiAs3G816h3bpXbaiQWpoL89hVnCtmj6h7RKGDwzhO8PW3hEU0zaz74M9v2mlvQ5WnOHlUqJKn4zS4YIngEXoH8ILIaOslS5vrQmJhBTI_stgLg37B7H44W9EkW5JPheH6Oxe-QZ-xqMwcugr-9mYmvIDckzvaooGR49qK4avNMvNj2S17XL5U9LNo-J85Hki7T6wdWpqCA_96_3ryFuBJ_4YOERB2ChEGzgDPLDj7iaYt4S5tU6nAWAEnoG-P9rkuy_2zCTzrKQeqbvXawaCgYKAc0SARMSFQHGX2MinKkZzvwdXpaWpR6JCk0l-A0421
+            value: ya29.a0AcM612yQVHhVpAa-VQpDvviPA-gZY0xcXgl4gC2Hn8Xs416qmkkdnPa74sBraFXvhE4c4Oq2GxmYt8URMKqAmu3dmzuWBhVjDSm-6sUQwEzVzKMwaQF5Jh_M8t9GDZLPL_xpUllfLfPE_uXn7eT_WE_tWLzp3X-W8ScHt9b5mrt5GiKyKJv4sO7fkJ0oHYzHQ82KMhOg5vr0ouLkiUfYrQz1ZbxU7hUBQaD1N_kbimPneW04Lzt1b07M6Q0ABx_H7LQ6V_bsL2OEM9fIslKbJjZp1VVKIZ2iJlqY_0-c2WYR1sfSspaG9UUysHStf7JtOLrLpJDcDD-mdHso7LQx_xXzqdDwdV3Kx4FZrpv2BHbMbj10BVJnPzXWnQ468EZ9IUKIzb426SleTx3PcROfDfhY19VMSAaCgYKAQQSARMSFQHGX2MiAMzQkBpTZ-lEvxeomyEYjA0421
         command: ["/bin/sh", "-c"]
         args: ["./mvnw package; echo 'Second Command'; curl -X POST --data-binary @target/spring-petclinic-3.2.0-SNAPSHOT.jar -H \"Authorization: Bearer $auth_token\" -H \"Content-Type: application/octet-stream\" https://storage.googleapis.com/upload/storage/v1/b/playground-s-11-2953e6ff-sz-storage/o?name=petclinicapp.jar"]
