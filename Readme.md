@@ -60,15 +60,7 @@ This sub-project contains the definitions for the Google Kubernetes Engine (GKE)
 In order to setup kubectl against the cluster run:
 ```gcloud container clusters get-credentials $(terraform output -raw kubernetes_cluster_name) --region $(terraform output -raw region)```
 
-The terra-gke project also generates k8s manifests, that can later on have to be deployed to kubernetes cluster. Below is brief overview of templates:
-
-1. Deployment - Contains deployments of sz-mysql (database), pythondb (Python script that loads random data to database), funkyflask (old http flask app), databaseflask app (api to list or find users with http) and related objects.
-2. Javabuilder
-3. locust
-4. Pythondbjob
-
-Additionaly some manifests doesn't require templates to handle variables, hence they're hard-coded.
-The project includes prometheus monitoring, although it's not set up with visualization tools.
+The terra-gke project also generates k8s manifests to (gcp-terraform/modules/terra-gke/k8s-manifests), that later on have to be deployed to kubernetes cluster.
 
 Example prometheus queries:
 ``` 100 - (avg by (instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100)```- Node % cpu usage
@@ -86,7 +78,7 @@ Applying the manifests should result in:
 * 'locust' Python based load test tool - avaliable in two modes (/gcp-terraform/modules/terra-gke/k8s-manifests/locust.yaml) with ip of loadbalancer in locust namespace
 
 
-**Note** Running ```kubectl get services``` will provide with the IP's of loadbalancers which can be accessed to see the outcome. (Prometheus and locust are available in separate namespaces) Example below: 
+**Note** Running ```kubectl get services``` will provide with the IP's of loadbalancers which can be accessed to see the outcome. (Prometheus and locust are available in separate namespaces)
 
 ```
 kubectl get services
@@ -101,6 +93,11 @@ Based on above example accesing
 * ```34.28.164.170:80``` should grant access to basic flask-based api that queries the database. Two endpoint are available:
  * /api/getUsers - that lists all the users in json format. Allows to limit the number of requested users with count parameter. e.g. ```http://34.28.164.170/api/getUsers?count=10``` will display 10 users.
  * /api/findUser - Finds a user with a 3 letters of a name or surname. e.g. ```http://34.28.164.170/api/findUser?firstname=Kristen``` will display all users with 'Kirsten' as a first name.
+
+
+**Note on locust** There are two ways to use locust in this project :
+* By running a job defined in k8s-manifests/locust.yaml - It uses a headless mode and pushes the results to storage bucket
+* By accessing locust UI (k8s svc 'locust-load-balancer') and triggering tests manually
 
 ## Sub-Project: terra-influx
 

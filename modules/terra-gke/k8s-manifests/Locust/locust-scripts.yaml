@@ -1,4 +1,4 @@
-#To be deleted, add some notes that before setting up webui for locust, it's required to run the loust.yaml defined by terraform template
+#To be deleted, add some notes that before setting up webui for locust, it's required to run the locust.yaml defined by terraform template
 apiVersion: v1
 kind: ConfigMap
 metadata:

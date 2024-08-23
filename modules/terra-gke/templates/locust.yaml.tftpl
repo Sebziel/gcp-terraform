@@ -43,7 +43,7 @@ spec:
             name: test-results
       containers:
         - name: utility-container
-          image: us-central1-docker.pkg.dev/playground-s-11-d9ce345b/my-repository/utility:v1
+          image: us-central1-docker.pkg.dev/${project_id}/my-repository/utility:v1
           imagePullPolicy: Always
           env:
           - name: auth_token
@@ -54,7 +54,7 @@ spec:
             - mountPath: /home/test-results
               name: test-results
           command: ["/bin/bash",  "-c"]
-          args: ["zip -r /home/test-results/testResults.zip /home/test-results/; curl -X POST --data-binary @/home/test-results/testResults.zip  -H \"Authorization: Bearer $auth_token\" -H \"Content-Type: application/octet-stream\" $googleStorageUrl/playground-s-11-d9ce345b-sz-storage/o?name=funkyflaskTestResults.zip"]
+          args: ["zip -r /home/test-results/testResults.zip /home/test-results/; curl -X POST --data-binary @/home/test-results/testResults.zip  -H \"Authorization: Bearer $auth_token\" -H \"Content-Type: application/octet-stream\" https://storage.googleapis.com/upload/storage/v1/b/${storage_bucket}/o?name=funkyflaskTestResults.zip"]
       volumes:
       - name: locust-scripts
         configMap:
@@ -105,7 +105,7 @@ spec:
             name: test-results
       containers:
         - name: utility-container
-          image: us-central1-docker.pkg.dev/playground-s-11-d9ce345b/my-repository/utility:v1
+          image: us-central1-docker.pkg.dev/${project_id}/my-repository/utility:v1
           imagePullPolicy: Always
           env:
           - name: auth_token
@@ -116,7 +116,7 @@ spec:
             - mountPath: /home/test-results
               name: test-results
           command: ["/bin/bash",  "-c"]
-          args: ["zip -r /home/test-results/testResults.zip /home/test-results/; curl -X POST --data-binary @/home/test-results/testResults.zip  -H \"Authorization: Bearer $auth_token\" -H \"Content-Type: application/octet-stream\" $googleStorageUrl/playground-s-11-d9ce345b-sz-storage/o?name=pythonDbTestResults.zip"]
+          args: ["zip -r /home/test-results/testResults.zip /home/test-results/; curl -X POST --data-binary @/home/test-results/testResults.zip  -H \"Authorization: Bearer auth_token\" -H \"Content-Type: application/octet-stream\" https://storage.googleapis.com/upload/storage/v1/b/${storage_bucket}/o?name=pythonDbTestResults.zip"]
       volumes:
       - name: locust-scripts
         configMap:
