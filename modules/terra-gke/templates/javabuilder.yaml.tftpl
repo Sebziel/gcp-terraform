@@ -15,4 +15,4 @@ spec:
           - name: auth_token
             value: ${token}
         command: ["/bin/sh", "-c"]
-        args: ["./mvnw package; echo 'Second Command'; curl -X POST --data-binary @target/spring-petclinic-3.2.0-SNAPSHOT.jar -H \"Authorization: Bearer $auth_token\" -H \"Content-Type: application/octet-stream\" https://storage.googleapis.com/upload/storage/v1/b/${storage_bucket}/o?name=petclinicapp.jar"]
+        args: ["./mvnw package; echo 'Second Command'; curl -X POST --data-binary @target/spring-petclinic-3.3.0-SNAPSHOT.jar -H \"Authorization: Bearer $auth_token\" -H \"Content-Type: application/octet-stream\" https://storage.googleapis.com/upload/storage/v1/b/${storage_bucket}/o?name=petclinicapp.jar"]

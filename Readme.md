@@ -82,11 +82,11 @@ Applying the manifests should result in:
 * 'FlaskDb App' a basic api that query the DB for user details.
 * 'JavaBuilder' a container which performs the build of spring petclinic app and uploads it to storage bucket.
 * 'pythondb-job' a kubernetes cronjob that loads randomly generated users data to the database, allowing to do that with multiple pods in parallel 
-* 'prometheus' 
-* 'locust'
+* 'prometheus' Monitoring tool for kubernetes cluster - available with ip of loadbalancer in prometheus namespace
+* 'locust' Python based load test tool - avaliable in two modes (/gcp-terraform/modules/terra-gke/k8s-manifests/locust.yaml) with ip of loadbalancer in locust namespace
 
 
-**Note** Running ```kubectl get services``` will provide with the IP's of loadbalancers which can be accessed to see the outcome. Example below: 
+**Note** Running ```kubectl get services``` will provide with the IP's of loadbalancers which can be accessed to see the outcome. (Prometheus and locust are available in separate namespaces) Example below: 
 
 ```
 kubectl get services
@@ -110,10 +110,6 @@ Two VM's are created, the startup scripts are generated and adjusted by terrafor
 * Inlfux - Vm used for monitoring of Petclinic App. Contains influx and telegraf tools installed.
 * Petclinic App - Contains example java springboot application build by terra-gke 'javabuilder'. Contains Joolokia Agent 
 **Note** more details on VM's and tools configuration can be found in /gcp-terraform/terra-influx/script-templates
-
-A separate static extenral ip is required, as in order for the ip address to be passed o telegraf configuration, the resource (VM) have to be created first, hence it's not possible to assign the externalIP for the startup script. 
-
-As an alternative, the remote-exec provisioner could be used to modify the value, but it get's quite complex while using ACG environments and limitations based on the time-span of the project and GCP IAM not available. 
 
 ## Important Note
 

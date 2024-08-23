@@ -45,7 +45,7 @@ resource "google_compute_instance" "petclinic-app" {
       #ephemeral public ip
     }
   }
-  #Unable to pass external IP as it requires for the resource to be finished first, can't 'self reference.
+  #Unable to pass external IP as it requires for the resource to be finished first, can't 'self reference. Hence the external ip have been used.
   metadata_startup_script = templatefile("${path.module}/script-templates/petclinic-startup.sh.tftpl", {project_id = "${var.project_id}", ipaddr = google_compute_address.vm-external-address.address , token ="sygoniummonstera"})
 }
 
