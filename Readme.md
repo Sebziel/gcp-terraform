@@ -1,15 +1,5 @@
-#Expected outcome
-Application created 
-What are the addresses and functionalities ? 
-
 #Todos
 1. Adjust readmes
-3. Add some load test for python app and java app
-    3.2 Add singular locust containers (preferebly a job) to compare with distributed, and adjust the requests for cpu and mem values
-5. Add a way to automatically create a backup of the sz-mysql databse
-    5.1 Sent the backups to storage
-
-
 
 # GCP + Terraform training
 
@@ -104,11 +94,18 @@ Based on above example accesing
 The purpose of the project is to manage influx and petclinic 
 
 Two VM's are created, the startup scripts are generated and adjusted by terraform.
-* Inlfux - Vm used for monitoring of Petclinic App. Contains influx and telegraf tools installed.
-* Petclinic App - Contains example java springboot application build by terra-gke 'javabuilder'. Contains Joolokia Agent 
+* Inlfux:
+    * Vm used for monitoring of Petclinic App.
+    * Contains influx and telegraf tools installed.
+    * Available at {influx-instance-external-ip}:8086 with default password set to admin/nimda2024
+    * Data from petclinic app and influxvm itself is available in data-explorer/training-bucket.
+* Petclinic App:
+    * Contains example java springboot application build by terra-gke 'javabuilder'.
+    * Contains Joolokia Agent for jvm monitoring - Data available in influxvm. 
+
 **Note** more details on VM's and tools configuration can be found in /gcp-terraform/terra-influx/script-templates
 
-## Important Note
+#### Important Note
 
 The `terraform.tfstate` and `.terraform.tfstate.lock.info` files, which are typically used to store workspace states, are listed in the .gitignore file as they should not be tracked in git repository. Since the environment is temporary, the tfstate files are kept locally, and moving them to external storage was not in scope of the project. 
 
